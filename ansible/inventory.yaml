@@ -10,7 +10,7 @@ linux:  # Группа хостов
         vm3:
           ansible_host: 89.169.177.209
         vm4:
-          ansible_host: 89.169.179.1
+          ansible_host: 89.169.176.227
   vars:  # Переменные, доступные или используемые для всех подгрупп
     ansible_user: s20691161  # имя пользователя
     connection_protocol: ssh  # тип подключения

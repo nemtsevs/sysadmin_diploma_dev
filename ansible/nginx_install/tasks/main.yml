@@ -6,4 +6,3 @@
     name: "nginx"
     state: present
   when: "'vm1' not in inventory_hostname"
-  notify: "Nginx Installed"

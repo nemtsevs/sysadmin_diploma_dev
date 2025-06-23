@@ -1,0 +1,7 @@
+---
+# handlers file for nginx_proxy
+- name: Restart Nginx
+  service:
+    name: nginx
+    state: restarted
+    enabled: true

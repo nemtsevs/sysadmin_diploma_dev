@@ -12,3 +12,10 @@
     - role: nginx_install
   tags:
     - nginx_install
+
+- name: Настройка проксирующего Nginx
+  hosts: vm2  # Применяем только к vm2 (прокси-серверу)
+  roles:
+    - role: nginx_proxy
+  tags:
+    - nginx_proxy

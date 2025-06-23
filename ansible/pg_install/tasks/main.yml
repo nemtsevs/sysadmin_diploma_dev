@@ -1,2 +1,17 @@
 ---
 # tasks file for pg_install
+
+- name: Обновить apt
+  apt:
+    update_cache: yes
+
+- name: Установить PostgreSQL
+  apt:
+    name: postgresql
+    state: present
+
+- name: Запустить и включить PostgreSQL
+  systemd:
+    name: postgresql
+    enabled: yes
+    state: started

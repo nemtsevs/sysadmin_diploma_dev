@@ -6,7 +6,7 @@
   tags:
     - install_packages
 
-- name: Установка nginx
+- name: Установка Nginx
   hosts: nginx  # Будет работать на узлах в группе nginx
   roles:
     - role: nginx_install
@@ -20,12 +20,19 @@
   tags:
     - nginx_proxy
 
-- name: Установка php
+- name: Установка PHP
   hosts: nginx
   roles:
     - role: php_install
   tags:
     - php_install
+
+- name: Установка PostgreSQL
+  hosts: vm3, vm4
+  roles:
+    - role: pg_install
+  tags:
+    - pg_install
 
 - name: Установка MediaWiki
   hosts: vm3, vm4

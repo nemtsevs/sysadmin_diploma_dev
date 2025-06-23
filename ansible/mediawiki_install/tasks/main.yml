@@ -1,0 +1,29 @@
+---
+# tasks file for mediawiki_install
+
+- name: Скачать архив MediaWiki
+  ansible.builtin.get_url:
+    url: https://releases.wikimedia.org/mediawiki/1.42/mediawiki-1.42.1.tar.gz
+    dest: /tmp/mediawiki-1.42.1.tar.gz
+    mode: '0644'
+
+- name: Проверить наличие каталога /var/www
+  ansible.builtin.file:
+    path: /var/www
+    state: directory
+    mode: '0755'
+
+- name: Распаковать MediaWiki в /var/www
+  ansible.builtin.unarchive:
+    src: /tmp/mediawiki-1.42.1.tar.gz
+    dest: /var/www/
+    remote_src: yes
+    extra_opts:
+     - --strip-components=1
+
+- name: Установить правильные права для веб-файлов
+  ansible.builtin.file:
+    path: /var/www/
+    state: directory
+    mode: '0755'
+    recurse: yes

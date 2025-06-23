@@ -4,8 +4,8 @@ events {
 
 http {
     upstream backend {
-        server {{ hostvars['vm2']['ansible_host'] }}:80;
         server {{ hostvars['vm3']['ansible_host'] }}:80;
+        server {{ hostvars['vm4']['ansible_host'] }}:80;
     }
 
     server {

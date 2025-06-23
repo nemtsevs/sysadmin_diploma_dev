@@ -26,3 +26,12 @@
     - role: php_install
   tags:
     - php_install
+
+- name: Установка PostgreSQL
+  hosts: vm3, vm4
+  vars_files:
+    - vars/postgres_secrets.yml
+  roles:
+    - role: pg_install
+  tags:
+    - pg_install

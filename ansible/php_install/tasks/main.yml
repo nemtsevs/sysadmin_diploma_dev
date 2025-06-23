@@ -1,0 +1,9 @@
+---
+# tasks file for php_install
+- name: Установка программ php
+  apt:
+    name: "{{ item }}"
+    state: present
+  loop:
+    - "{{ php_packages_to_install }}"
+  when: inventory_hostname not in ['vm1', 'vm2']

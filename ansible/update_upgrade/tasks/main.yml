@@ -1,2 +1,11 @@
 ---
 # tasks file for update_upgrade
+
+- name: Update
+  apt:
+    update_cache: yes
+
+- name: Upgrade
+  apt:
+    upgrade: dist
+    autoremove: yes

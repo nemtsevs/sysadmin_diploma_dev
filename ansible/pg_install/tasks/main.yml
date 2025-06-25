@@ -6,6 +6,12 @@
     name: postgresql
     state: present
 
+- name: Запустить и включить PostgreSQL
+  systemd:
+    name: postgresql
+    enabled: true
+    state: started
+
 - name: Настроить postgresql.conf для сетевого доступа
   become: true
   become_user: postgres
@@ -13,6 +19,7 @@
     path: /etc/postgresql/*/main/postgresql.conf
     regexp: "#?listen_addresses\\s*=\\s*'.*'"
     replace: "listen_addresses = '*'"
+  notify: restart postgresql
 
 - name: Настроить pg_hba.conf для разрешения подключений
   become: true
@@ -21,9 +28,4 @@
     path: /etc/postgresql/*/main/pg_hba.conf
     line: "host    all             all             0.0.0.0/0               md5"
     insertafter: EOF
-
-- name: Запустить и включить PostgreSQL
-  systemd:
-    name: postgresql
-    enabled: true
-    state: started
+  notify: restart postgresql

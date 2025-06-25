@@ -133,6 +133,12 @@ ansible-vault edit vars/vault/postgres_vault.yml
 ls -lh vars/vault/postgres_vault.yml
 
 
+nano ansible.cfg
+```
+ansible_remote_tmp: /tmp/.ansible-{{ uid }}
+```
+
+
 nano playbook.yaml
 ansible-galaxy init pg_mediawiki
 

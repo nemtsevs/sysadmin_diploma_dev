@@ -13,12 +13,12 @@
   tags:
     - nginx_custom
 
-# - name: Настройка проксирующего Nginx
-#   hosts: vm2  # Применяем только к vm2 (прокси-серверу)
-#   roles:
-#     - role: nginx_proxy
-#   tags:
-#     - nginx_proxy
+- name: Настройка проксирующего Nginx
+  hosts: vm1
+  roles:
+    - role: nginx_proxy
+  tags:
+    - nginx_proxy
 
 # - name: Установка PHP
 #   hosts: nginx

@@ -1,5 +1,6 @@
 ---
 # tasks file for nginx_proxy
+
 - name: Останавливаем Nginx (чтобы заменить конфиг)
   service:
     name: nginx

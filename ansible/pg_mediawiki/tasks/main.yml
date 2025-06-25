@@ -7,6 +7,13 @@
     state: present
   become: true
 
+- name: Установка acl
+  ansible.builtin.apt:
+    name: "{{ item }}"
+    state: present
+  with_items:
+    - acl
+
 - name: Создание пользователя wikiuser
   become: true
   become_user: postgres
@@ -19,7 +26,6 @@
 - name: Создание базы данных my_wiki
   become: true
   become_user: postgres
-  become_method: su
   postgresql_db:
     name: my_wiki
     owner: wikiuser

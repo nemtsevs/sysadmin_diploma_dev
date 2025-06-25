@@ -9,7 +9,7 @@
 - name: Отключение автозапуска Nginx
   ansible.builtin.service:
     name: nginx
-    enabled: no
+    enabled: false
 
 - name: Установка программ PHP
   apt:

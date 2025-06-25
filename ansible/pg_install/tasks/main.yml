@@ -6,6 +6,22 @@
     name: postgresql
     state: present
 
+- name: Настроить postgresql.conf для сетевого доступа
+  become: true
+  become_user: postgres
+  ansible.builtin.replace:
+    path: /etc/postgresql/*/main/postgresql.conf
+    regexp: '#?listen_addresses\s*=\s*'.*''
+    replace: "listen_addresses = '*'"
+
+- name: Настроить pg_hba.conf для разрешения подключений
+  become: true
+  become_user: postgres
+  ansible.builtin.lineinfile:
+    path: /etc/postgresql/*/main/pg_hba.conf
+    line: "host    all             all             0.0.0.0/0               md5"
+    insertafter: EOF
+
 - name: Запустить и включить PostgreSQL
   systemd:
     name: postgresql

@@ -4,7 +4,7 @@
   roles:
     - role: default_packages
   tags:
-    - install_packages
+    - default_packages
 
 - name: Установка Nginx
   hosts: nginx  # Будет работать на узлах в группе nginx

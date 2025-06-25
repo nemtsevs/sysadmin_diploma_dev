@@ -4,7 +4,7 @@
 - name: Установка psycopg2 (требуется для модулей PostgreSQL)
   ansible.builtin.apt:
     name: python3-psycopg2
-    state: absent
+    state: present
 
 - name: Установка acl
   ansible.builtin.apt:

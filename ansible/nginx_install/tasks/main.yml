@@ -1,8 +1,0 @@
----
-# tasks file for nginx_install
-
-- name: Установка Nginx
-  apt:
-    name: "nginx"
-    state: present
-  when: "'vm1' not in inventory_hostname"

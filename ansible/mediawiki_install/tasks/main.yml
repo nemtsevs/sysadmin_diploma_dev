@@ -7,23 +7,29 @@
     dest: /tmp/mediawiki-1.42.1.tar.gz
     mode: '0644'
 
-- name: Проверить наличие каталога /var/www
+- name: Проверить наличие каталога /var/www/html
   ansible.builtin.file:
-    path: /var/www
+    path: /var/www/html
     state: directory
     mode: '0755'
 
-- name: Распаковать MediaWiki в /var/www
+- name: Распаковать MediaWiki в /var/www/html
   ansible.builtin.unarchive:
     src: /tmp/mediawiki-1.42.1.tar.gz
-    dest: /var/www/
+    dest: /var/www/html/
     remote_src: yes
     extra_opts:
      - --strip-components=1
 
-- name: Установить правильные права для веб-файлов
+- name: Установить владельца /var/www/html
   ansible.builtin.file:
-    path: /var/www/
-    state: directory
-    mode: '0755'
-    recurse: yes
+    path: /var/www/html
+    owner: www-data
+    group: www-data
+    recurse: yes  # аналог -R в chown
+
+- name: Установить права /var/www/html
+  ansible.builtin.file:
+    path: /var/www/html
+    mode: "u=rwX,go=rX"  # аналогично chmod
+    recurse: yes  # рекурсивное применение

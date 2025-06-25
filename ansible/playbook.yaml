@@ -6,12 +6,12 @@
   tags:
     - default_packages
 
-# - name: Установка Nginx
-#   hosts: nginx  # Будет работать на узлах в группе nginx
-#   roles:
-#     - role: nginx_install
-#   tags:
-#     - nginx_install
+- name: Установка Nginx
+  hosts: nginx
+  roles:
+    - role: nginx_custom
+  tags:
+    - nginx_custom
 
 # - name: Настройка проксирующего Nginx
 #   hosts: vm2  # Применяем только к vm2 (прокси-серверу)

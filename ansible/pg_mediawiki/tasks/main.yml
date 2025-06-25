@@ -8,9 +8,7 @@
   become: true
 
 - name: Создание пользователя wikiuser
-  become: true
-  become_user: postgres
-  become_method: sudo
+  remote_user: postgres
   postgresql_user:
     name: wikiuser
     password: "{{ postgres_wikiuser_password }}"
@@ -18,9 +16,7 @@
     role_attr_flags: "NOSUPERUSER,NOCREATEDB,NOCREATEROLE"
 
 - name: Создание базы данных my_wiki
-  become: true
-  become_user: postgres
-  become_method: sudo
+  remote_user: postgres
   postgresql_db:
     name: my_wiki
     owner: wikiuser

@@ -50,9 +50,9 @@
   tags:
     - php_install
 
-# - name: Установка MediaWiki
-#   hosts: vm3, vm4
-#   roles:
-#     - role: mediawiki_install
-#   tags:
-#     - mediawiki_install
+- name: Установка MediaWiki
+  hosts: vm2, vm3
+  roles:
+    - role: mediawiki_install
+  tags:
+    - mediawiki_install

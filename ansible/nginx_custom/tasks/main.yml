@@ -10,5 +10,5 @@
   ansible.builtin.template:
     src: index.j2
     dest: /var/www/html/index.nginx-debian.html
-  when: "'vm_1' not in inventory_hostname"
+  when: "'vm1' not in inventory_hostname"
   notify: "Nginx Reloader"

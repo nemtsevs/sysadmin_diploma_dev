@@ -1,10 +1,16 @@
 ---
 # tasks file for pg_mediawiki
 
+- name: Установка psycopg2 (требуется для модулей PostgreSQL)
+  ansible.builtin.apt:
+    name: python3-psycopg2
+    state: present
+  become: true
+
 - name: Создание пользователя wikiuser
   postgresql_user:
     name: wikiuser
-    password: "wikiuser"
+    password: "{{ postgres_wikiuser_password }}"
     state: present
     role_attr_flags: "NOSUPERUSER,NOCREATEDB,NOCREATEROLE"
 

@@ -4,7 +4,7 @@
 - name: Создание пользователя wikiuser
   postgresql_user:
     name: wikiuser
-    password: "{{ postgres_wikiuser_password }}"
+    password: "wikiuser"
     state: present
     role_attr_flags: "NOSUPERUSER,NOCREATEDB,NOCREATEROLE"
 

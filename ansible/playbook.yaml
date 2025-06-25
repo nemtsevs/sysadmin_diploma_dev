@@ -6,37 +6,37 @@
   tags:
     - default_packages
 
-- name: Установка Nginx
-  hosts: nginx  # Будет работать на узлах в группе nginx
-  roles:
-    - role: nginx_install
-  tags:
-    - nginx_install
+# - name: Установка Nginx
+#   hosts: nginx  # Будет работать на узлах в группе nginx
+#   roles:
+#     - role: nginx_install
+#   tags:
+#     - nginx_install
 
-- name: Настройка проксирующего Nginx
-  hosts: vm2  # Применяем только к vm2 (прокси-серверу)
-  roles:
-    - role: nginx_proxy
-  tags:
-    - nginx_proxy
+# - name: Настройка проксирующего Nginx
+#   hosts: vm2  # Применяем только к vm2 (прокси-серверу)
+#   roles:
+#     - role: nginx_proxy
+#   tags:
+#     - nginx_proxy
 
-- name: Установка PHP
-  hosts: nginx
-  roles:
-    - role: php_install
-  tags:
-    - php_install
+# - name: Установка PHP
+#   hosts: nginx
+#   roles:
+#     - role: php_install
+#   tags:
+#     - php_install
 
-- name: Установка PostgreSQL
-  hosts: vm3, vm4
-  roles:
-    - role: pg_install
-  tags:
-    - pg_install
+# - name: Установка PostgreSQL
+#   hosts: vm3, vm4
+#   roles:
+#     - role: pg_install
+#   tags:
+#     - pg_install
 
-- name: Установка MediaWiki
-  hosts: vm3, vm4
-  roles:
-    - role: mediawiki_install
-  tags:
-    - mediawiki_install
+# - name: Установка MediaWiki
+#   hosts: vm3, vm4
+#   roles:
+#     - role: mediawiki_install
+#   tags:
+#     - mediawiki_install

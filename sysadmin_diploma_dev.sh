@@ -135,7 +135,7 @@ ls -lh vars/vault/postgres_vault.yml
 
 nano ansible.cfg
 ```
-ansible_remote_tmp: /tmp/.ansible-{{ uid }}
+ansible_remote_tmp = /tmp/.ansible-{{ uid }}
 ```
 
 

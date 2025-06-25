@@ -8,20 +8,17 @@
   become: true
 
 - name: Создание пользователя wikiuser
-  become: true
-  become_user: postgres
-  become_method: su
   postgresql_user:
     name: wikiuser
     password: "{{ postgres_wikiuser_password }}"
     state: present
     role_attr_flags: "NOSUPERUSER,NOCREATEDB,NOCREATEROLE"
+    login_user: postgres
 
 - name: Создание базы данных my_wiki
-  become: true
-  become_user: postgres
   become_method: su
   postgresql_db:
     name: my_wiki
     owner: wikiuser
     state: present
+    login_user: postgres

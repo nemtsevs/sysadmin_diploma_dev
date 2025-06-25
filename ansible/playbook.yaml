@@ -20,6 +20,13 @@
   tags:
     - nginx_proxy
 
+- name: Update Upgrade
+  hosts: vm2, vm3
+  roles:
+    - role: update_upgrade
+  tags:
+    - update_upgrade
+
 # - name: Установка PHP
 #   hosts: nginx
 #   roles:

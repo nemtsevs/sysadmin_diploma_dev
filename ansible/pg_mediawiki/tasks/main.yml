@@ -10,6 +10,7 @@
 - name: Создание пользователя wikiuser
   become: true
   become_user: postgres
+  become_method: sudo
   postgresql_user:
     name: wikiuser
     password: "{{ postgres_wikiuser_password }}"
@@ -19,6 +20,7 @@
 - name: Создание базы данных my_wiki
   become: true
   become_user: postgres
+  become_method: sudo
   postgresql_db:
     name: my_wiki
     owner: wikiuser

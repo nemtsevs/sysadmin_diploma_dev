@@ -36,8 +36,6 @@
 
 - name: Создание пользователя и базы данных MediaWiki
   hosts: vm2
-  vars_files:
-    - vars/vault/postgres_vault.yml
   roles:
     - role: pg_mediawiki
   tags:

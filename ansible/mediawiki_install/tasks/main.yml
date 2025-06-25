@@ -42,3 +42,16 @@
     - /var/www/html/index.html
     - /var/www/html/index.nginx-debian.html
   become: true
+
+
+
+- name: Установить владельца LocalSettings.php
+  ansible.builtin.file:
+    path: /var/www/html/LocalSettings.php
+    owner: www-data
+    group: www-data
+
+- name: Установить права LocalSettings.php
+  ansible.builtin.file:
+    path: /var/www/html/LocalSettings.php
+    mode: '600'

@@ -27,19 +27,19 @@
   tags:
     - update_upgrade
 
+- name: Установка PostgreSQL
+  hosts: vm2, vm3
+  roles:
+    - role: pg_install
+  tags:
+    - pg_install
+
 # - name: Установка PHP
 #   hosts: nginx
 #   roles:
 #     - role: php_install
 #   tags:
 #     - php_install
-
-# - name: Установка PostgreSQL
-#   hosts: vm3, vm4
-#   roles:
-#     - role: pg_install
-#   tags:
-#     - pg_install
 
 # - name: Установка MediaWiki
 #   hosts: vm3, vm4

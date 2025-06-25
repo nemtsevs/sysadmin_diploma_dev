@@ -1,16 +1,14 @@
 ---
 linux:  # Группа хостов
-  children:  # Обозначение, что будет подгруппа хостов
-    nginx:  # Имя подгруппы хостов
-      hosts:  # Узлы группы
+  children:  # Обозначение, что будет подгруппа
+    nginx:  # Имя подгруппы
+      hosts:  # Узлы
         vm1:
-          ansible_host: 89.169.179.72
+          ansible_host: 89.169.184.177
         vm2:
-          ansible_host: 89.169.183.226
+          ansible_host: 89.169.183.185
         vm3:
-          ansible_host: 89.169.177.209
-        vm4:
-          ansible_host: 89.169.176.227
+          ansible_host: 89.169.167.167
   vars:  # Переменные, доступные или используемые для всех подгрупп
     ansible_user: s20691161  # имя пользователя
     connection_protocol: ssh  # тип подключения

@@ -52,6 +52,8 @@
 
 - name: Установка MediaWiki
   hosts: vm2, vm3
+  vars_files:
+    - vars/vault/postgres_vault.yml
   roles:
     - role: mediawiki_install
   tags:

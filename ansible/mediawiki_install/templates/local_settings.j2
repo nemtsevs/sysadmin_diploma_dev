@@ -32,7 +32,7 @@ $wgMetaNamespace = 'S20691161wiki';
 $wgScriptPath = '';
 
 ## The protocol and server name to use in fully-qualified URLs
-$wgServer = '{{ hostvars['vm2']['ansible_host'] }}';
+$wgServer = 'http://{{ hostvars['vm2']['ansible_host'] }}';
 
 ## The URL path to static resources (images, scripts, etc.)
 $wgResourceBasePath = $wgScriptPath;
@@ -61,7 +61,7 @@ $wgDBtype = 'postgres';
 $wgDBserver = 'localhost';
 $wgDBname = 'my_wiki';
 $wgDBuser = 'wikiuser';
-$wgDBpassword = 'wikiuser';
+$wgDBpassword = '{{ postgres_wikiuser_password }}';
 
 # Postgres specific settings
 $wgDBport = "5432";

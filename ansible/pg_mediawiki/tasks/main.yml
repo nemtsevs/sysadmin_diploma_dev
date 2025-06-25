@@ -15,7 +15,6 @@
     password: "{{ postgres_wikiuser_password }}"
     state: present
     role_attr_flags: "NOSUPERUSER,NOCREATEDB,NOCREATEROLE"
-  become: true
 
 - name: Создание базы данных my_wiki
   become: true

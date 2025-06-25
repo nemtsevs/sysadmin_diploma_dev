@@ -34,7 +34,7 @@
   tags:
     - pg_install
 
-- name: Создание пользователя и базы MediaWiki
+- name: Создание пользователя и базы данных MediaWiki
   hosts: vm2
   roles:
     - role: pg_mediawiki

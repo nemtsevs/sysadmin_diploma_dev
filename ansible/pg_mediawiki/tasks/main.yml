@@ -1,2 +1,19 @@
 ---
 # tasks file for pg_mediawiki
+
+- name: Создание пользователя wikiuser
+  postgresql_user:
+    name: wikiuser
+    password: "{{ postgres_wikiuser_password }}"
+    state: present
+    role_attr_flags: "NOSUPERUSER,NOCREATEDB,NOCREATEROLE"
+  become: true
+  become_user: postgres
+
+- name: Создание базы данных my_wiki
+  postgresql_db:
+    name: my_wiki
+    owner: wikiuser
+    state: present
+  become: true
+  become_user: postgres

@@ -1,9 +1,24 @@
 ---
 # tasks file for php_install
-- name: Установка программ php
+
+- name: Остановка Nginx
+  ansible.builtin.service:
+    name: nginx
+    state: stopped
+
+- name: Отключение автозапуска Nginx
+  ansible.builtin.service:
+    name: nginx
+    enabled: no
+
+- name: Установка программ PHP
   apt:
     name: "{{ item }}"
     state: present
   loop:
     - "{{ php_packages_to_install }}"
-  when: inventory_hostname not in ['vm1', 'vm2']
+
+- name: Запуск Apache
+  ansible.builtin.service:
+    name: apache2
+    state: started

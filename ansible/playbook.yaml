@@ -43,12 +43,12 @@
   tags:
     - pg_mediawiki
 
-# - name: Установка PHP
-#   hosts: vm2, vm3
-#   roles:
-#     - role: php_install
-#   tags:
-#     - php_install
+- name: Установка PHP
+  hosts: vm2, vm3
+  roles:
+    - role: php_install
+  tags:
+    - php_install
 
 # - name: Установка MediaWiki
 #   hosts: vm3, vm4

@@ -147,3 +147,13 @@ yamllint pg_mediawiki/tasks/main.yml
 ansible-playbook --syntax-check -i inventory.yaml playbook.yaml
 
 ansible-playbook playbook.yaml -i inventory.yaml --tags="pg_mediawiki"
+
+
+nano playbook.yaml
+ansible-galaxy init php_install
+
+yamllint playbook.yaml
+yamllint php_install/tasks/main.yml
+ansible-playbook --syntax-check -i inventory.yaml playbook.yaml
+
+ansible-playbook playbook.yaml -i inventory.yaml --tags="php_install"

@@ -9,6 +9,6 @@
 - name: Подмена веб-страницы
   ansible.builtin.template:
     src: index.j2
-    dest: /var/www/html/index.nginx-debian.html
+    dest: /var/www/html/index.nginx-ubuntu.html
   when: "'vm1' not in inventory_hostname"
   notify: "Nginx Reloader"

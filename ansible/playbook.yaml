@@ -36,6 +36,8 @@
 
 - name: Создание пользователя и базы данных MediaWiki
   hosts: vm2
+  vars:
+    ansible_remote_tmp: /tmp/.ansible-${USER}
   vars_files:
     - vars/vault/postgres_vault.yml
   roles:

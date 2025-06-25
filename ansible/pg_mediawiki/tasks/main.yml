@@ -15,6 +15,7 @@
     role_attr_flags: "NOSUPERUSER,NOCREATEDB,NOCREATEROLE"
   become: true
   become_user: postgres
+  become_method: su
 
 - name: Создание базы данных my_wiki
   postgresql_db:
@@ -23,3 +24,4 @@
     state: present
   become: true
   become_user: postgres
+  become_method: su

@@ -3,9 +3,9 @@
 
 - name: Update
   apt:
-    update_cache: yes
+    update_cache: true
 
 - name: Upgrade
   apt:
     upgrade: dist
-    autoremove: yes
+    autoremove: true

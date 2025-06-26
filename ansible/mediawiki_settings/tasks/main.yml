@@ -26,16 +26,34 @@
   become_user: www-data
   args:
     creates: /var/www/html/LocalSettings.php  # Не запускать, если файл уже есть
-  no_log: true  # Скрывает пароли в логах
   when: inventory_hostname == 'vm2'
+  no_log: true  # Скрывает пароли в логах
 
-- name: Установить владельца конфига MediaWiki
-  ansible.builtin.file:
+- name: Подготовить конфиг vm2 на vm3
+  ansible.builtin.fetch:
+    src: /var/www/html/LocalSettings.php
+    dest: /tmp/LocalSettings_vm2.php
+    flat: yes
+  delegate_to: vm2
+  run_once: true
+  when: inventory_hostname == 'vm3'
+
+- name: Разместить конфиг vm3
+  ansible.builtin.copy:
+    src: /tmp/LocalSettings_vm2.php
+    dest: /var/www/html/LocalSettings.php
+  when: inventory_hostname == 'vm3'
+
+- name: Заменить веб-сервер конфига vm3
+  ansible.builtin.replace:
     path: /var/www/html/LocalSettings.php
-    owner: www-data
-    group: www-data
+    regexp: "(\\$wgServer\\s*=\\s*[\"']).*?([\"'])"
+    replace: "\\1http://{{ hostvars[inventory_hostname]['ansible_host'] }}\\2"
+  when: inventory_hostname == 'vm3'
 
 - name: Установить права конфига MediaWiki
   ansible.builtin.file:
     path: /var/www/html/LocalSettings.php
+    owner: www-data
+    group: www-data
     mode: '600'

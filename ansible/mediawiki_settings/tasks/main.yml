@@ -42,6 +42,7 @@
   ansible.builtin.copy:
     src: /tmp/LocalSettings_vm2.php
     dest: /var/www/html/LocalSettings.php
+    remote_src: no  # Указывает, что файл находится на control node
   when: inventory_hostname == 'vm3'
 
 - name: Заменить веб-сервер конфига vm3

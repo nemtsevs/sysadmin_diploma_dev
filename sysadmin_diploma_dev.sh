@@ -35,17 +35,6 @@ vm_nat_ip = {
 }
 ```
 
-ssh -l s20691161 89.169.185.238
-ssh -l s20691161 89.169.186.8
-ssh -l s20691161 89.169.180.207
-echo $HOSTNAME
-sudo su
-
-
-http://89.169.185.238:3000
-http://89.169.186.8
-http://89.169.180.207
-
 
 # ansible
 cd ~/sysadmin_diploma_dev/ansible
@@ -69,6 +58,12 @@ ansible-playbook --syntax-check -i inventory.yaml playbook.yaml
 
 ansible-playbook playbook.yaml -i inventory.yaml --tags="default_packages"
 
+ssh -l s20691161 89.169.185.238
+ssh -l s20691161 89.169.186.8
+ssh -l s20691161 89.169.180.207
+echo $HOSTNAME
+sudo su
+
 
 nano playbook.yaml
 ansible-galaxy init nginx_custom
@@ -79,6 +74,9 @@ yamllint nginx_custom/handlers/main.yml
 ansible-playbook --syntax-check -i inventory.yaml playbook.yaml
 
 ansible-playbook playbook.yaml -i inventory.yaml --tags="nginx_custom"
+
+http://89.169.186.8
+http://89.169.180.207
 
 
 nano playbook.yaml

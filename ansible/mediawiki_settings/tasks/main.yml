@@ -29,22 +29,13 @@
   when: inventory_hostname == 'vm2'
   no_log: true  # Скрывает пароли в логах
 
-- name: Проверить существование LocalSettings.php на vm2
-  ansible.builtin.stat:
-    path: /var/www/html/LocalSettings.php
-  register: local_settings_content
-  delegate_to: vm2
-  run_once: true
-  when: inventory_hostname == 'vm3'
-
-- name: Получить содержимое файла (если существует)
-  ansible.builtin.slurp:
+- name: Копировать конфиг vm2 на vm3
+  ansible.builtin.copy:
     src: /var/www/html/LocalSettings.php
-  register: local_settings_content
-  delegate_to: vm2
-  run_once: true
-  when:
-    - inventory_hostname == 'vm3'
+    dest: /var/www/html/LocalSettings.php
+    remote_src: yes  # Указываем, что файл берется с удаленной машины
+  delegate_to: vm2   # Указываем, откуда копируем
+  when: inventory_hostname == 'vm3'
 
 - name: Заменить веб-сервер конфига vm3
   ansible.builtin.replace:

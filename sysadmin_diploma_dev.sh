@@ -24,27 +24,27 @@ terraform apply -auto-approve
 Outputs:
 
 vm_ip = {
-  "vm1" = "192.168.10.20"
-  "vm2" = "192.168.10.28"
-  "vm3" = "192.168.10.3"
+  "vm1" = "192.168.10.26"
+  "vm2" = "192.168.10.3"
+  "vm3" = "192.168.10.30"
 }
 vm_nat_ip = {
-  "vm1" = "89.169.184.177"
-  "vm2" = "89.169.183.185"
-  "vm3" = "89.169.167.167"
+  "vm1" = "89.169.185.238"
+  "vm2" = "89.169.186.8"
+  "vm3" = "89.169.180.207"
 }
 ```
 
-ssh -l s20691161 89.169.184.177
-ssh -l s20691161 89.169.183.185
-ssh -l s20691161 89.169.167.167
+ssh -l s20691161 89.169.185.238
+ssh -l s20691161 89.169.186.8
+ssh -l s20691161 89.169.180.207
 echo $HOSTNAME
 sudo su
 
 
-http://89.169.184.177:3000
-http://89.169.183.185
-http://89.169.167.167
+http://89.169.185.238:3000
+http://89.169.186.8
+http://89.169.180.207
 
 
 # ansible
@@ -91,8 +91,8 @@ ansible-playbook --syntax-check -i inventory.yaml playbook.yaml
 
 ansible-playbook playbook.yaml -i inventory.yaml --tags="nginx_proxy"
 
-http://89.169.184.177:3000
-for i in {1..10}; do curl http://89.169.184.177:3000; done
+http://89.169.185.238:3000
+for i in {1..10}; do curl http://89.169.185.238:3000; done
 
 
 nano playbook.yaml

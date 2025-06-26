@@ -1,6 +1,12 @@
 ---
 # tasks file for mediawiki_settings
 
+# - name: Удалить конфиг MediaWiki
+#   ansible.builtin.file:
+#     path: /var/www/html/LocalSettings.php
+#     state: absent
+#   become: true
+
 - name: Запустить install.php для настройки MediaWiki
   ansible.builtin.command: |
     php /var/www/html/maintenance/install.php \
@@ -21,18 +27,6 @@
   args:
     creates: /var/www/html/LocalSettings.php  # Не запускать, если файл уже есть
   no_log: true  # Скрывает пароли в логах
-  # when: not (lookup('file', '/var/www/html/LocalSettings.php') | success)
-
-# - name: Удалить конфиг MediaWiki
-#   ansible.builtin.file:
-#     path: /var/www/html/LocalSettings.php
-#     state: absent
-#   become: true
-
-# - name: Подменить конфиг MediaWiki
-#   ansible.builtin.template:
-#     src: local_settings.j2
-#     dest: /var/www/html/LocalSettings.php
 
 - name: Установить владельца конфига MediaWiki
   ansible.builtin.file:

@@ -26,7 +26,7 @@
   become_user: www-data
   args:
     creates: /var/www/html/LocalSettings.php  # Не запускать, если файл уже есть
-  no_log: true  # Скрывает пароли в логах
+  # no_log: true  # Скрывает пароли в логах
 
 - name: Установить владельца конфига MediaWiki
   ansible.builtin.file:

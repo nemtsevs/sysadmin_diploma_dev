@@ -1,24 +1,46 @@
 ---
 # tasks file for mediawiki_settings
 
-- name: Удалить конфиг MediaWiki
-  ansible.builtin.file:
-    path: /var/www/html/LocalSettings.php
-    state: absent
+- name: Запустить install.php для настройки MediaWiki
+  ansible.builtin.command: |
+    php /var/www/html/maintenance/install.php \
+      --confpath=/var/www/html \
+      --dbname="my_wiki" \
+      --dbuser="wikiuser" \
+      --dbpass="{{ postgres_wikiuser_password }}" \
+      --dbserver="{{ hostvars['vm2']['ansible_host'] }}" \
+      --dbtype=postgres \
+      --lang=ru \
+      --pass="{{ mediawiki_admin_password }}" \
+      --scriptpath="" \
+      --server="http://{{ hostvars[inventory_hostname]['ansible_host'] }}" \
+      "s20691161wiki" \
+      "admin"
   become: true
+  become_user: www-data
+  args:
+    creates: /var/www/html/LocalSettings.php  # Не запускать, если файл уже есть
+  no_log: true  # Скрывает пароли в логах
+  when: not (lookup('file', '/var/www/html/LocalSettings.php') | success)
 
-- name: Подменить конфиг MediaWiki
-  ansible.builtin.template:
-    src: local_settings.j2
-    dest: /var/www/html/LocalSettings.php
+# - name: Удалить конфиг MediaWiki
+#   ansible.builtin.file:
+#     path: /var/www/html/LocalSettings.php
+#     state: absent
+#   become: true
 
-- name: Установить владельца конфига MediaWiki
-  ansible.builtin.file:
-    path: /var/www/html/LocalSettings.php
-    owner: www-data
-    group: www-data
+# - name: Подменить конфиг MediaWiki
+#   ansible.builtin.template:
+#     src: local_settings.j2
+#     dest: /var/www/html/LocalSettings.php
 
-- name: Установить права конфига MediaWiki
-  ansible.builtin.file:
-    path: /var/www/html/LocalSettings.php
-    mode: '600'
+# - name: Установить владельца конфига MediaWiki
+#   ansible.builtin.file:
+#     path: /var/www/html/LocalSettings.php
+#     owner: www-data
+#     group: www-data
+
+# - name: Установить права конфига MediaWiki
+#   ansible.builtin.file:
+#     path: /var/www/html/LocalSettings.php
+#     mode: '600'

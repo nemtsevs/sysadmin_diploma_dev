@@ -42,6 +42,10 @@ echo $HOSTNAME
 sudo su
 
 
+http://89.169.184.177:3000
+http://89.169.183.185
+http://89.169.167.167
+
 
 # ansible
 cd ~/sysadmin_diploma_dev/ansible
@@ -75,10 +79,6 @@ yamllint nginx_custom/handlers/main.yml
 ansible-playbook --syntax-check -i inventory.yaml playbook.yaml
 
 ansible-playbook playbook.yaml -i inventory.yaml --tags="nginx_custom"
-
-http://89.169.184.177
-http://89.169.183.185
-http://89.169.167.167
 
 
 nano playbook.yaml

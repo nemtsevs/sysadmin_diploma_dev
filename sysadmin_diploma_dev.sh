@@ -183,6 +183,11 @@ nano mediawiki_settings/templates/local_settings.j2
 "{{ hostvars['vm2']['ansible_host'] }}"
 ```
 
+ansible-vault create vars/vault/mediawiki_vault.yml
+```
+mediawiki_admin_password: "admin_pass"
+```
+
 yamllint playbook.yaml
 yamllint mediawiki_settings/tasks/main.yml
 ansible-playbook --syntax-check -i inventory.yaml playbook.yaml

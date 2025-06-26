@@ -21,6 +21,7 @@
     password: "{{ postgres_wikiuser_password }}"
     state: present
     role_attr_flags: "NOSUPERUSER,NOCREATEDB,NOCREATEROLE"
+  when: inventory_hostname == 'vm2'
 
 - name: Создание базы данных my_wiki
   become: true
@@ -29,3 +30,4 @@
     name: my_wiki
     owner: wikiuser
     state: present
+  when: inventory_hostname == 'vm2'

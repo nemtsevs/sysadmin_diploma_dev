@@ -34,8 +34,8 @@
   tags:
     - pg_install
 
-- name: Создание пользователя и базы данных MediaWiki
-  hosts: vm2
+- name: Подготовка postgres MediaWiki
+  hosts: vm2, vm3
   vars_files:
     - vars/vault/postgres_vault.yml
   roles:
@@ -57,7 +57,7 @@
   tags:
     - mediawiki_install
 
-- name: Настройка конфига MediaWiki
+- name: Первичная настройка MediaWiki
   hosts: vm2, vm3
   vars_files:
     - vars/vault/postgres_vault.yml

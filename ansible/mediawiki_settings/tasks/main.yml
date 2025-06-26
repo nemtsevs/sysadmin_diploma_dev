@@ -33,8 +33,6 @@
   ansible.posix.synchronize:
     src: /var/www/html/LocalSettings.php
     dest: /var/www/html/LocalSettings.php
-    rsync_opts:
-      - "--rsync-path=\"sudo -u www-data rsync\""  # Для сохранения прав
   delegate_to: localhost  # Выполнять с control node
   become: false
   when: inventory_hostname == 'vm3'

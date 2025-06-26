@@ -29,20 +29,11 @@
   when: inventory_hostname == 'vm2'
   no_log: true  # Скрывает пароли в логах
 
-- name: Подготовить конфиг vm2 на vm3
-  ansible.builtin.fetch:
+- name: Скопировать конфиг vm2 на vm3
+  ansible.builtin.synchronize:
     src: /var/www/html/LocalSettings.php
-    dest: /tmp/LocalSettings_vm2.php
-    flat: yes
-  delegate_to: vm2
-  run_once: true
-  when: inventory_hostname == 'vm3'
-
-- name: Разместить конфиг vm3
-  ansible.builtin.copy:
-    src: /tmp/LocalSettings_vm2.php
     dest: /var/www/html/LocalSettings.php
-    remote_src: no  # Указывает, что файл находится на control node
+    delegate_to: vm2
   when: inventory_hostname == 'vm3'
 
 - name: Заменить веб-сервер конфига vm3

@@ -177,12 +177,6 @@ http://89.169.180.207
 nano playbook.yaml
 ansible-galaxy init mediawiki_settings
 
-mkdir mediawiki_settings/templates
-nano mediawiki_settings/templates/local_settings.j2
-```
-"{{ hostvars['vm2']['ansible_host'] }}"
-```
-
 ansible-vault create vars/vault/mediawiki_vault.yml
 ```
 mediawiki_admin_password: "admin_pass"

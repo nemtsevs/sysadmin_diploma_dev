@@ -42,19 +42,3 @@
     - /var/www/html/index.html
     - /var/www/html/index.nginx-debian.html
   become: true
-
-- name: Подменить конфиг MediaWiki
-  ansible.builtin.template:
-    src: local_settings.j2
-    dest: /var/www/html/LocalSettings.php
-
-- name: Установить владельца конфига MediaWiki
-  ansible.builtin.file:
-    path: /var/www/html/LocalSettings.php
-    owner: www-data
-    group: www-data
-
-- name: Установить права конфига MediaWiki
-  ansible.builtin.file:
-    path: /var/www/html/LocalSettings.php
-    mode: '600'

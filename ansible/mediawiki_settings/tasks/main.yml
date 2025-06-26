@@ -18,10 +18,10 @@
       "admin"
   become: true
   become_user: www-data
-  args:
-    creates: /var/www/html/LocalSettings.php  # Не запускать, если файл уже есть
+  # args:
+  #   creates: /var/www/html/LocalSettings.php  # Не запускать, если файл уже есть
   no_log: true  # Скрывает пароли в логах
-  when: not (lookup('file', '/var/www/html/LocalSettings.php') | success)
+  # when: not (lookup('file', '/var/www/html/LocalSettings.php') | success)
 
 # - name: Удалить конфиг MediaWiki
 #   ansible.builtin.file:
@@ -34,13 +34,13 @@
 #     src: local_settings.j2
 #     dest: /var/www/html/LocalSettings.php
 
-# - name: Установить владельца конфига MediaWiki
-#   ansible.builtin.file:
-#     path: /var/www/html/LocalSettings.php
-#     owner: www-data
-#     group: www-data
+- name: Установить владельца конфига MediaWiki
+  ansible.builtin.file:
+    path: /var/www/html/LocalSettings.php
+    owner: www-data
+    group: www-data
 
-# - name: Установить права конфига MediaWiki
-#   ansible.builtin.file:
-#     path: /var/www/html/LocalSettings.php
-#     mode: '600'
+- name: Установить права конфига MediaWiki
+  ansible.builtin.file:
+    path: /var/www/html/LocalSettings.php
+    mode: '600'

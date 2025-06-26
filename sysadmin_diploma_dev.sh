@@ -187,6 +187,7 @@ ansible-vault create vars/vault/mediawiki_vault.yml
 ```
 mediawiki_admin_password: "admin_pass"
 ```
+ansible-vault edit vars/vault/mediawiki_vault.yml
 
 yamllint playbook.yaml
 yamllint mediawiki_settings/tasks/main.yml

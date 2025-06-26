@@ -1,6 +1,12 @@
 ---
 # tasks file for mediawiki_settings
 
+- name: Удалить конфиг MediaWiki
+  ansible.builtin.file:
+    path: /var/www/html/LocalSettings.php
+    state: absent
+  become: true
+
 - name: Подменить конфиг MediaWiki
   ansible.builtin.template:
     src: local_settings.j2

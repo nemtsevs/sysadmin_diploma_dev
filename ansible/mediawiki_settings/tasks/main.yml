@@ -18,8 +18,8 @@
       "admin"
   become: true
   become_user: www-data
-  # args:
-  #   creates: /var/www/html/LocalSettings.php  # Не запускать, если файл уже есть
+  args:
+    creates: /var/www/html/LocalSettings.php  # Не запускать, если файл уже есть
   no_log: true  # Скрывает пароли в логах
   # when: not (lookup('file', '/var/www/html/LocalSettings.php') | success)
 

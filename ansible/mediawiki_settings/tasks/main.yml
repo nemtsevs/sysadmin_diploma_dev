@@ -29,11 +29,14 @@
   when: inventory_hostname == 'vm2'
   no_log: true  # Скрывает пароли в логах
 
-- name: Скопировать конфиг vm2 на vm3
-  ansible.builtin.synchronize:
+- name: Скопировать конфиг с vm2 на vm3
+  ansible.posix.synchronize:
     src: /var/www/html/LocalSettings.php
     dest: /var/www/html/LocalSettings.php
-    delegate_to: vm2
+    rsync_opts:
+      - "--rsync-path=\"sudo -u www-data rsync\""  # Для сохранения прав
+  delegate_to: localhost  # Выполнять с control node
+  become: false
   when: inventory_hostname == 'vm3'
 
 - name: Заменить веб-сервер конфига vm3

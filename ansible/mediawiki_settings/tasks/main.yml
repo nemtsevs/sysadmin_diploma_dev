@@ -29,17 +29,21 @@
   when: inventory_hostname == 'vm2'
   no_log: true  # Скрывает пароли в логах
 
-- name: Скопировать конфиг напрямую с vm2 на vm3
-  ansible.posix.synchronize:
+- name: Получить содержимое конфига vm2
+  ansible.builtin.slurp:
     src: /var/www/html/LocalSettings.php
+  register: local_settings_content
+  delegate_to: vm2
+  run_once: true
+  when: inventory_hostname == 'vm3'
+
+- name: Создать конфиг на vm3
+  ansible.builtin.copy:
+    content: "{{ local_settings_content.content | b64decode }}"
     dest: /var/www/html/LocalSettings.php
-    # Указываем, что копируем между двумя удалёнными узлами
-    _local_rsync_path: /usr/bin/rsync
-    _substitute_controller: false
-    rsync_opts:
-      - "--rsync-path='sudo -u www-data rsync'"  # Для сохранения прав
-  delegate_to: vm2  # Копируем С vm2
-  become: false
+    owner: www-data
+    group: www-data
+    mode: '0600'
   when: inventory_hostname == 'vm3'
 
 - name: Заменить веб-сервер конфига vm3

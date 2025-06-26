@@ -162,14 +162,24 @@ ansible-playbook playbook.yaml -i inventory.yaml --tags="php_install"
 nano playbook.yaml
 ansible-galaxy init mediawiki_install
 
-mkdir mediawiki_install/templates
-nano mediawiki_install/templates/local_settings.j2
-```
-"{{ hostvars['vm2']['ansible_host'] }}"
-```
-
 yamllint playbook.yaml
 yamllint mediawiki_install/tasks/main.yml
 ansible-playbook --syntax-check -i inventory.yaml playbook.yaml
 
 ansible-playbook playbook.yaml -i inventory.yaml --tags="mediawiki_install"
+
+
+nano playbook.yaml
+ansible-galaxy init mediawiki_settings
+
+mkdir mediawiki_settings/templates
+nano mediawiki_settings/templates/local_settings.j2
+```
+"{{ hostvars['vm2']['ansible_host'] }}"
+```
+
+yamllint playbook.yaml
+yamllint mediawiki_settings/tasks/main.yml
+ansible-playbook --syntax-check -i inventory.yaml playbook.yaml
+
+ansible-playbook playbook.yaml -i inventory.yaml --tags="mediawiki_settings"

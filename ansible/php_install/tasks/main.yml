@@ -12,7 +12,7 @@
     enabled: false
 
 - name: Установка программ PHP
-  apt:
+  ansible.builtin.apt:
     name: "{{ item }}"
     state: present
   loop:

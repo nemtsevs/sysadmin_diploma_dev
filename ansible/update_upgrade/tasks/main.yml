@@ -2,10 +2,10 @@
 # tasks file for update_upgrade
 
 - name: Update
-  apt:
+  ansible.builtin.apt:
     update_cache: true
 
 - name: Upgrade
-  apt:
+  ansible.builtin.apt:
     upgrade: dist
     autoremove: true

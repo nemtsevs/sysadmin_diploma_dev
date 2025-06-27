@@ -1,16 +1,12 @@
 ---
 # tasks file for pg_mediawiki
 
-- name: Установка psycopg2 (требуется для модулей PostgreSQL)
-  ansible.builtin.apt:
-    name: python3-psycopg2
-    state: present
-
-- name: Установка acl
+- name: Установка доп. модулей
   ansible.builtin.apt:
     name: "{{ item }}"
     state: present
   with_items:
+    - python3-psycopg2
     - acl
 
 - name: Создание пользователя wikiuser

@@ -1,8 +1,9 @@
 ---
 # handlers file for pg_install
 
-- name: restart postgresql
+- name: Postgresql Reloader
   become: true
-  systemd:
+  ansible.builtin.systemd:
     name: postgresql
     state: restarted
+  listen: "Postgresql Reloader"

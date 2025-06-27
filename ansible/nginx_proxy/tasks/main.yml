@@ -2,17 +2,17 @@
 # tasks file for nginx_proxy
 
 - name: Останавливаем Nginx (чтобы заменить конфиг)
-  service:
+  ansible.builtin.service:
     name: nginx
     state: stopped
 
 - name: Копируем конфигурацию прокси
-  template:
+  ansible.builtin.template:
     src: nginx.conf.j2
     dest: /etc/nginx/nginx.conf
-  notify: Restart Nginx
+  notify: "Nginx Reloader"
 
 - name: Удаляем дефолтный конфиг сайта
-  file:
+  ansible.builtin.file:
     path: /etc/nginx/sites-enabled/default
     state: absent

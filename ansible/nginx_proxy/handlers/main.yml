@@ -1,8 +1,9 @@
 ---
 # handlers file for nginx_proxy
 
-- name: Restart Nginx
-  service:
+- name: Nginx Reloader
+  ansible.builtin.service:
     name: nginx
     state: restarted
     enabled: true
+  listen: "Nginx Reloader"

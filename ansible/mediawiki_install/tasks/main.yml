@@ -21,16 +21,11 @@
     extra_opts:
       - --strip-components=1
 
-- name: Установить владельца /var/www/html
+- name: Установить права /var/www/html
   ansible.builtin.file:
     path: /var/www/html
     owner: www-data
     group: www-data
-    recurse: true
-
-- name: Установить права /var/www/html
-  ansible.builtin.file:
-    path: /var/www/html
     mode: "u=rwX,go=rX"
     recurse: true
 

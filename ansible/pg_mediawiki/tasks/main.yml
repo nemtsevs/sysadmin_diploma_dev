@@ -12,7 +12,7 @@
 - name: Создание пользователя wikiuser
   become: true
   become_user: postgres
-  ansible.builtin.postgresql_user:
+  community.postgresql.postgresql_user:
     name: wikiuser
     password: "{{ postgres_wikiuser_password }}"
     state: present
@@ -22,7 +22,7 @@
 - name: Создание базы данных my_wiki
   become: true
   become_user: postgres
-  ansible.builtin.postgresql_db:
+  community.postgresql.postgresql_db:
     name: my_wiki
     owner: wikiuser
     state: present

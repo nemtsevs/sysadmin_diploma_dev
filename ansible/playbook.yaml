@@ -76,17 +76,17 @@
   tags:
     - pg_master_replica
 
-# - name: Установка Zabbix-сервера
-#   hosts: vm1
-#   roles:
-#     - role: zabbix_server
-#       vars:
-#         zabbix_server_database: mysql  # или postgresql
-#         zabbix_server_dbhost: "{{ hostvars['vm1']['ansible_host'] }}"
-#         zabbix_server_dbname: zabbix
-#         zabbix_server_dbuser: zabbix
-#         zabbix_server_dbpassword: "{{ zabbix_server_db_password }}"
-#         zabbix_server_install_frontend: true
-#         zabbix_server_web_server: nginx  # или apache
-#   tags:
-#     - zabbix_server_install
+- name: Установка Zabbix-сервера
+  hosts: vm1
+  roles:
+    - role: zabbix_server
+      vars:
+        zabbix_server_database: mysql  # или postgresql
+        zabbix_server_dbhost: "{{ hostvars['vm1']['ansible_host'] }}"
+        zabbix_server_dbname: zabbix
+        zabbix_server_dbuser: zabbix
+        zabbix_server_dbpassword: "{{ zabbix_server_db_password }}"
+        zabbix_server_install_frontend: true
+        zabbix_server_web_server: nginx  # или apache
+  tags:
+    - zabbix_server_install

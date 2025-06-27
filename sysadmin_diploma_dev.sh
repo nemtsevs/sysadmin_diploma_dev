@@ -209,7 +209,6 @@ http://89.169.180.207
 
 
 
-ansible-galaxy install zabbix
 ansible-galaxy install zabbix_server
 
 

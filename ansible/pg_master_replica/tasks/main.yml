@@ -57,7 +57,7 @@
   ansible.builtin.command:
     argv:
       - pg_basebackup
-      - -h "{{ hostvars['vm2']['ansible_host'] }}"
+      - -h {{hostvars['vm2']['ansible_host']}}
       - -D /var/lib/postgresql/14/main
       - -U repuser
       - -P

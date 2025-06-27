@@ -1,2 +1,28 @@
 ---
 # tasks file for pg_master_replica
+
+- name: Создать пользователя repuser
+  become: true
+  become_user: postgres
+  ansible.builtin.postgresql_user:
+    name: repuser
+    password: "{{ postgres_repuser_password }}"
+    state: present
+    role_attr_flags: "REPLICATION"
+  when: inventory_hostname == 'vm2'
+
+- name: Настроить postgresql.conf для репликации
+  ansible.builtin.replace:
+    path: /etc/postgresql/14/main/postgresql.conf
+    regexp: "(#?\\s*wal_level\\s*=\\s*)\\S(.*)"
+    replace: "\\1replica\\2"
+  when: inventory_hostname == 'vm2'
+  notify: "Postgresql Reloader"
+
+- name: Настроить pg_hba.conf для репликации
+  ansible.builtin.lineinfile:
+    path: /etc/postgresql/14/main/pg_hba.conf
+    line: "host    replication     repuser         {{ hostvars['vm3']['ansible_host'] }}/32           scram-sha-256"
+    insertafter: EOF
+  when: inventory_hostname == 'vm2'
+  notify: "Postgresql Reloader"

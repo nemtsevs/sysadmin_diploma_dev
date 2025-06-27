@@ -1,2 +1,9 @@
 ---
 # handlers file for pg_master_replica
+
+- name: Postgresql Reloader
+  become: true
+  ansible.builtin.systemd:
+    name: postgresql
+    state: restarted
+  listen: "Postgresql Reloader"

@@ -59,7 +59,7 @@
       - pg_basebackup
       - -h{{ hostvars['vm2']['ansible_host'].strip() }}
       - -D /var/lib/postgresql/14/main
-      - -U repuser
+      - -Urepuser
       - -P
       - -v
       - -R

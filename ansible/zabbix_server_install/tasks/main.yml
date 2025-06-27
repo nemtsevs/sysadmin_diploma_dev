@@ -1,2 +1,7 @@
 ---
 # tasks file for zabbix_server_install
+
+- name: Установка docker-compose
+  ansible.builtin.apt:
+    name: docker-compose
+    state: present

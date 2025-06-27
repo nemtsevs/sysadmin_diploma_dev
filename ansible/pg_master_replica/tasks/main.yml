@@ -57,23 +57,12 @@
   ansible.builtin.command:
     argv:
       - pg_basebackup
-      - -h{{ hostvars['vm2']['ansible_host'].strip() }}
+      - -h{{ hostvars['vm2']['ansible_host'] }}
       - -p5432
       - -D /var/lib/postgresql/14/main
       - -Urepuser
       - -P
       - -v
       - -R
-      - -Xstream
-      - -C
-      - -Sstandby1
-      - --wal-method=fetch
-  register: backup_result
-  changed_when: backup_result.rc == 0
-  failed_when: backup_result.rc != 0
-  when: inventory_hostname == 'vm3'
-  register: backup_result
-  changed_when: backup_result.rc == 0
-  failed_when: backup_result.rc != 0
   when: inventory_hostname == 'vm3'
   notify: "Postgresql Reloader"

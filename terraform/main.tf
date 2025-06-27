@@ -54,3 +54,21 @@ resource "yandex_compute_instance" "virtual_machine" {
       EOF
   }
 }
+
+resource "yandex_storage_bucket" "ice_bucket" {
+  bucket        = var.s3bucket["name"]
+  max_size      = var.s3bucket["max_size"]
+  storage_class = "COLD"
+  zone          = "ru-central1-b"
+
+  acl           = "private"
+
+  grant {
+    id          = var.yc_service_account_id
+    type        = "CanonicalUser"
+    permissions = ["FULL_CONTROL"]
+  }
+
+  access_key    = var.yc_access_key_id
+  secret_key    = var.yc_secret_access_key
+}

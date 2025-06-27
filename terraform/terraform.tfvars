@@ -36,3 +36,8 @@ virtual_machines = {
     template       = "fd80jhic7e80h9s58v62" # ID образа ОС для использования
   }
 }
+
+s3bucket = {
+  name             = "cloud-s3-s20691161"   # Имя бакета
+  max_size         = 20 * 1024 * 1024       # Макс объём бакета
+}

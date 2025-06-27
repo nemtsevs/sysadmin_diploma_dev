@@ -55,7 +55,7 @@
   become: true
   become_user: postgres
   ansible.builtin.command: "pg_basebackup \
-    -h 10.10.0.142 \
+    -h {{ hostvars['vm2']['ansible_host'] }} \
     -D /var/lib/postgresql/14/main \
     -U repuser \
     -P \

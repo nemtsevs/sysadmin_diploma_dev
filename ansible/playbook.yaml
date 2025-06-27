@@ -78,6 +78,7 @@
 
 - name: Установка Zabbix-сервера
   hosts: vm1
+  become: true
   roles:
     - role: zabbix_server
       vars:

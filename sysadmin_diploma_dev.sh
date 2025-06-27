@@ -22,7 +22,10 @@ terraform init
 
 
 terraform validate
-terraform plan
+terraform plan \
+  -var="yc_service_account_id=$YC_SERVICE_ACCOUNT_ID" \
+  -var="yc_access_key_id=$YC_ACCESS_KEY_ID" \
+  -var="yc_secret_access_key=$YC_SECRET_ACCESS_KEY"
 
 terraform apply -auto-approve \
   -var="yc_service_account_id=$YC_SERVICE_ACCOUNT_ID" \

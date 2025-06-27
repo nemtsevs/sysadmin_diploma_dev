@@ -23,7 +23,7 @@
   ansible.builtin.lineinfile:
     path: /etc/postgresql/14/main/pg_hba.conf
     line: >-
-      host    replication     repuser         {{ hostvars['vm3']['ansible_host'] }}/32           scram-sha-256
+      host replication repuser  {{ hostvars['vm3']['ansible_host'] }}/32  scram-sha-256
     insertafter: EOF
   when: inventory_hostname == 'vm2'
   notify: "Postgresql Reloader"

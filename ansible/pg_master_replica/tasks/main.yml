@@ -54,15 +54,12 @@
 - name: Резервный сервер - Перенести данные мастера
   become: true
   become_user: postgres
-  ansible.builtin.command:
-    argv:
-      - pg_basebackup
-      - -h{{ hostvars['vm2']['ansible_host'] }}
-      - -p5432
-      - -D /var/lib/postgresql/14/main
-      - -Urepuser
-      - -P
-      - -v
-      - -R
+  ansible.builtin.command: "pg_basebackup \
+    -h 10.10.0.142 \
+    -D /var/lib/postgresql/14/main \
+    -U repuser \
+    -P \
+    -v \
+    -R"
   when: inventory_hostname == 'vm3'
   notify: "Postgresql Reloader"

@@ -15,7 +15,7 @@
 - name: Настроить postgresql.conf для сетевого доступа
   ansible.builtin.replace:
     path: /etc/postgresql/14/main/postgresql.conf
-    regexp: "#?listen_addresses\\s*=\\s*'.*'"
+    regexp: "^#?\\s*listen_addresses\\s*=\\s*'.*'"
     replace: "listen_addresses = '*'"
   notify: "Postgresql Reloader"
 

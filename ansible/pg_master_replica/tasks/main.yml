@@ -14,7 +14,7 @@
 - name: Настроить postgresql.conf для репликации
   ansible.builtin.replace:
     path: /etc/postgresql/14/main/postgresql.conf
-    regexp: "#?\\s*wal_level\\s*=\\s*\\S+"
+    regexp: "^#?\\s*wal_level\\s*=\\s*\\S+"
     replace: 'wal_level = replica'
   when: inventory_hostname == 'vm2'
   notify: "Postgresql Reloader"
@@ -33,7 +33,7 @@
 - name: Резервный сервер - Настроить postgresql.conf
   ansible.builtin.replace:
     path: /etc/postgresql/14/main/postgresql.conf
-    regexp: "#?\\s*hot_standby\\s*=\\s*\\S+"
+    regexp: "^#?\\s*hot_standby\\s*=\\s*\\S+"
     replace: 'hot_standby = on'
   when: inventory_hostname == 'vm3'
   notify: "Postgresql Reloader"

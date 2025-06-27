@@ -222,7 +222,6 @@ _password: ""
 ```
 
 yamllint playbook.yaml
-yamllint zabbix_server_install/tasks/main.yml
 ansible-playbook --syntax-check -i inventory.yaml playbook.yaml
 
 ansible-playbook playbook.yaml -i inventory.yaml --tags="zabbix_server_install"

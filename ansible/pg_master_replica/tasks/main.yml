@@ -57,16 +57,16 @@
   ansible.builtin.command:
     argv:
       - pg_basebackup
-      - -h {{ hostvars['vm2']['ansible_host'].strip() }}
-      - -p 5432
+      - -h{{ hostvars['vm2']['ansible_host'].strip() }}
+      - -p5432
       - -D /var/lib/postgresql/14/main
-      - -U repuser
+      - -Urepuser
       - -P
       - -v
       - -R
-      - -X stream
+      - -Xstream
       - -C
-      - -S standby1
+      - -Sstandby1
       - --wal-method=fetch
   register: backup_result
   changed_when: backup_result.rc == 0

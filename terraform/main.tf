@@ -58,7 +58,6 @@ resource "yandex_compute_instance" "virtual_machine" {
 resource "yandex_storage_bucket" "ice_bucket" {
   bucket        = var.s3bucket["name"]
   max_size      = var.s3bucket["max_size"]
-  acl           = "private"
 
   grant {
     id          = var.yc_service_account_id

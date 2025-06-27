@@ -216,9 +216,9 @@ ansible-galaxy install zabbix_server
 nano playbook.yaml
 ansible-galaxy init zabbix_server_install
 
-ansible-vault edit vars/vault/zabbix_vault.yml
+ansible-vault create vars/vault/zabbix_vault.yml
 ```
-_password: ""
+zabbix_server_db_password: "z1a2b3b4i5x6"
 ```
 
 yamllint playbook.yaml

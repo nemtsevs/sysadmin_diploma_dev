@@ -199,6 +199,7 @@ postgres_repuser_password: "repuser"
 
 yamllint playbook.yaml
 yamllint pg_master_replica/tasks/main.yml
+yamllint pg_master_replica/handlers/main.yml
 ansible-playbook --syntax-check -i inventory.yaml playbook.yaml
 
 ansible-playbook playbook.yaml -i inventory.yaml --tags="pg_master_replica"

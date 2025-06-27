@@ -4,7 +4,7 @@
 - name: Создать пользователя repuser
   become: true
   become_user: postgres
-  community.postgresql.postgresql_user:
+  ansible.builtin.postgresql_user:
     name: repuser
     password: "{{ postgres_repuser_password }}"
     state: present

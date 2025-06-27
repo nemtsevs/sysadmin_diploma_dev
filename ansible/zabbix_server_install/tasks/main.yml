@@ -16,4 +16,5 @@
 - name: Запуск docker-compose zabbix_server
   become: true
   become_user: s20691161
-  ansible.builtin.command: "sudo docker-compose -f ~/docker-compose.yml up -d"
+  become_method: sudo
+  ansible.builtin.command: "docker-compose -f ~/docker-compose.yml up -d"

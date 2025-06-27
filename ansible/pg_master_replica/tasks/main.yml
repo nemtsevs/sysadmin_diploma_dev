@@ -58,6 +58,7 @@
     -h {{ hostvars['vm2']['ansible_host'] }} \
     -D /var/lib/postgresql/14/main \
     -U repuser \
+    -w {{ postgres_repuser_password }} \
     -P \
     -v \
     -R"

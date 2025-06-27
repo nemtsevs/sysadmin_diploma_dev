@@ -29,39 +29,18 @@
   no_log: true  # Скрывает пароли в логах
   when: inventory_hostname == 'vm2'
 
-- name: Создать временную директорию на control node
-  ansible.builtin.file:
-    path: /tmp/ansible_mediawiki_transfer
-    state: directory
-    mode: '0700'
-  delegate_to: localhost
-  run_once: true
-
-- name: Скачать LocalSettings.php с vm2
-  ansible.builtin.fetch:
+- name: Read file from vm2 into variable
+  ansible.builtin.slurp:
     src: /var/www/html/LocalSettings.php
-    dest: /tmp/ansible_mediawiki_transfer/LocalSettings.tmp
-    flat: yes
+  register: file_content
   delegate_to: vm2
-  run_once: true
   when: inventory_hostname == 'vm3'
 
-- name: Загрузить конфиг на vm3
+- name: Write file on vm3
   ansible.builtin.copy:
-    src: /tmp/ansible_mediawiki_transfer/LocalSettings.tmp
+    content: "{{ file_content.content | b64decode }}"
     dest: /var/www/html/LocalSettings.php
-    remote_src: no  # Важно! Файл берется с control node
-    owner: www-data
-    group: www-data
-    mode: '0600'
   when: inventory_hostname == 'vm3'
-
-- name: Очистить временные файлы
-  ansible.builtin.file:
-    path: /tmp/ansible_mediawiki_transfer
-    state: absent
-  delegate_to: localhost
-  run_once: true
 
 - name: Заменить веб-сервер конфига vm3
   ansible.builtin.replace:

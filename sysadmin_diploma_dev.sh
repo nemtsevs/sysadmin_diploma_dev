@@ -222,3 +222,5 @@ yamllint zabbix_server_install/tasks/main.yml
 ansible-playbook --syntax-check -i inventory.yaml playbook.yaml
 
 ansible-playbook playbook.yaml -i inventory.yaml --tags="zabbix_server_install"
+
+http://89.169.185.238:8080

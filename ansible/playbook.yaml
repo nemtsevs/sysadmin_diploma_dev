@@ -75,3 +75,10 @@
     - role: pg_master_replica
   tags:
     - pg_master_replica
+
+- name: Установка Zabbix-сервера
+  hosts: vm1
+  roles:
+    - role: zabbix_server_install
+  tags:
+    - zabbix_server_install

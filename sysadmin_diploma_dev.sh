@@ -206,3 +206,23 @@ ansible-playbook playbook.yaml -i inventory.yaml --tags="pg_master_replica"
 
 http://89.169.186.8
 http://89.169.180.207
+
+
+
+ansible-galaxy install zabbix
+ansible-galaxy install zabbix_server
+
+
+nano playbook.yaml
+ansible-galaxy init zabbix_server_install
+
+ansible-vault edit vars/vault/zabbix_vault.yml
+```
+_password: ""
+```
+
+yamllint playbook.yaml
+yamllint zabbix_server_install/tasks/main.yml
+ansible-playbook --syntax-check -i inventory.yaml playbook.yaml
+
+ansible-playbook playbook.yaml -i inventory.yaml --tags="zabbix_server_install"

@@ -185,4 +185,3 @@ ansible-playbook playbook.yaml -i inventory.yaml --tags="mediawiki_settings"
 
 http://89.169.186.8
 http://89.169.180.207
-

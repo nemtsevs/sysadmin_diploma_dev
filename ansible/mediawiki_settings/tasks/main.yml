@@ -29,16 +29,16 @@
   no_log: true  # Скрывает пароли в логах
   when: inventory_hostname == 'vm2'
 
-- name: Read file from vm2 into variable
+- name: Конфиг vm2 в переменную
   ansible.builtin.slurp:
     src: /var/www/html/LocalSettings.php
-  register: file_content
+  register: config_content
   delegate_to: vm2
   when: inventory_hostname == 'vm3'
 
-- name: Write file on vm3
+- name: Конфиг vm3 из переменной
   ansible.builtin.copy:
-    content: "{{ file_content.content | b64decode }}"
+    content: "{{ config_content.content | b64decode }}"
     dest: /var/www/html/LocalSettings.php
   when: inventory_hostname == 'vm3'
 

@@ -50,6 +50,8 @@
   notify: "Postgresql Reloader"
 
 - name: Резервный сервер - Перенести данные мастера
+  become: true
+  become_user: postgres
   ansible.builtin.command:
     argv:
       - pg_basebackup

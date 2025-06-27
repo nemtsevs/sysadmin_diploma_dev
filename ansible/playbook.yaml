@@ -66,3 +66,12 @@
     - role: mediawiki_settings
   tags:
     - mediawiki_settings
+
+- name: Настройка postgres master-replica
+  hosts: vm2, vm3
+  vars_files:
+    - vars/vault/postgres_vault.yml
+  roles:
+    - role: pg_master_replica
+  tags:
+    - pg_master_replica

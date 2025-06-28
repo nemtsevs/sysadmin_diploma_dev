@@ -3,24 +3,48 @@ linux:  # Группа хостов
   children:
     nginx:  # Подгруппа хостов
       hosts:  # Узлы
-        vm1:
-          ansible_host: &vm1_ip 89.169.172.130
-        vm2:
-          ansible_host: &vm2_ip 89.169.179.103
-        vm3:
-          ansible_host: &vm3_ip 89.169.182.143
+        vm1: &vm1
+          ansible_host: 89.169.172.130
+        vm2: &vm2
+          ansible_host: 89.169.179.103
+        vm3: &vm3
+          ansible_host: 89.169.182.143
+
+    wiki_proxy:
+      hosts:
+        vm1: *vm1
+
+    wiki_media:
+      hosts:
+        vm2: *vm2
+        vm3: *vm3
+
+    wiki_db:
+      children:
+        wiki_db_master:
+          hosts:
+            vm2: *vm2
+        wiki_db_replica:
+          hosts:
+            vm3: *vm3
+
+    zabbix_server:
+      hosts:
+        vm1: *vm1
+
   vars:  # Переменные группы
     ansible_user: s20691161
     connection_protocol: ssh
     ansible_become: true
 
-    wiki_proxy_vm: "vm1"
-    wiki_proxy_ip: *vm1_ip
+    wiki_proxy_vm: "{{ groups['wiki_proxy'][0] }}"
+    wiki_proxy_ip: "{{ hostvars[groups['wiki_proxy'][0]].ansible_host }}"
 
-    wiki_pg_master_vm: "vm2"
-    wiki_pg_master_ip: *vm2_ip
-    wiki_pg_replica_vm: "vm3"
-    wiki_pg_replica_ip: *vm3_ip
+    wiki_db_master_vm: "{{ groups['wiki_db_master'][0] }}"
+    wiki_db_master_ip: "{{ hostvars[groups['wiki_db_master'][0]].ansible_host }}"
 
-    zabbix_server_vm: "vm1"
-    zabbix_server_ip: *vm1_ip
+    wiki_db_replica_vm: "{{ groups['wiki_db_replica'][0] }}"
+    wiki_db_replica_ip: "{{ hostvars[groups['wiki_db_replica'][0]].ansible_host }}"
+
+    zabbix_server_vm: "{{ groups['zabbix_server'][0] }}"
+    zabbix_server_ip: "{{ hostvars[groups['zabbix_server'][0]].ansible_host }}"

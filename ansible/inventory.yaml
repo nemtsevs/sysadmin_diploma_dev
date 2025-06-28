@@ -1,7 +1,7 @@
 ---
 linux:  # Группа хостов
-  children:  # Обозначение, что будет подгруппа
-    nginx:  # Имя подгруппы
+  children:
+    nginx:  # Подгруппа хостов
       hosts:  # Узлы
         vm1:
           ansible_host: &vm1_ip 89.169.172.130
@@ -9,10 +9,10 @@ linux:  # Группа хостов
           ansible_host: &vm2_ip 89.169.179.103
         vm3:
           ansible_host: &vm3_ip 89.169.182.143
-  vars:  # Переменные, доступные или используемые для всех подгрупп
-    ansible_user: s20691161  # имя пользователя
-    connection_protocol: ssh  # тип подключения
-    ansible_become: true  # с другим пользователем после подключения
+  vars:  # Переменные группы
+    ansible_user: s20691161
+    connection_protocol: ssh
+    ansible_become: true
 
     wiki_proxy_vm: "vm1"
     wiki_proxy_ip: *vm1_ip

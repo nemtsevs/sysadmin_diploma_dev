@@ -25,14 +25,14 @@
     src: docker-compose.yml.j2
     dest: /home/s20691161/zabbix_server/docker-compose.yml
 
-- name: Запустить docker-compose zabbix_server
-  become_user: s20691161
-  community.docker.docker_compose:
-    project_src: "/home/s20691161/zabbix_server/"
-    files: /home/s20691161/zabbix_server/docker-compose.yml
-    state: present
-    stopped: false
-    recreate: always
-    pull: false
-  environment:
-    COMPOSE_PROJECT_NAME: zabbix_server
+# - name: Запустить docker-compose zabbix_server
+#   become_user: s20691161
+#   community.docker.docker_compose:
+#     project_src: "/home/s20691161/zabbix_server/"
+#     files: /home/s20691161/zabbix_server/docker-compose.yml
+#     state: present
+#     stopped: false
+#     recreate: always
+#     pull: false
+#   environment:
+#     COMPOSE_PROJECT_NAME: zabbix_server

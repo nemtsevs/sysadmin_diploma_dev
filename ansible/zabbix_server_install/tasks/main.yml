@@ -6,7 +6,7 @@
     name: docker-compose
     state: present
 
-- name: Создать директорию zabbix_server 
+- name: Создать директорию zabbix_server
   become_user: s20691161
   ansible.builtin.file:
     path: /home/s20691161/zabbix_server
@@ -17,7 +17,7 @@
   ansible.builtin.user:
     name: s20691161
     groups: docker
-    append: yes
+    append: true
 
 - name: Подменить docker-compose.yml zabbix_server
   become_user: s20691161

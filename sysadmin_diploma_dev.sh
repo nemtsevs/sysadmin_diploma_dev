@@ -71,9 +71,9 @@ ansible-playbook --syntax-check -i inventory.yaml playbook.yaml
 
 ansible-playbook playbook.yaml -i inventory.yaml --tags="default_packages"
 
-ssh -l s20691161 89.169.185.238
-ssh -l s20691161 89.169.186.8
-ssh -l s20691161 89.169.180.207
+ssh -l s20691161 89.169.172.130
+ssh -l s20691161 89.169.179.103
+ssh -l s20691161 89.169.182.143
 echo $HOSTNAME
 sudo su
 
@@ -88,9 +88,9 @@ ansible-playbook --syntax-check -i inventory.yaml playbook.yaml
 
 ansible-playbook playbook.yaml -i inventory.yaml --tags="nginx_custom"
 
-http://89.169.185.238
-http://89.169.186.8
-http://89.169.180.207
+http://89.169.172.130
+http://89.169.179.103
+http://89.169.182.143
 
 
 nano playbook.yaml
@@ -103,8 +103,8 @@ ansible-playbook --syntax-check -i inventory.yaml playbook.yaml
 
 ansible-playbook playbook.yaml -i inventory.yaml --tags="nginx_proxy"
 
-http://89.169.185.238:3000
-for i in {1..10}; do curl http://89.169.185.238:3000; done
+http://89.169.172.130:3000
+for i in {1..10}; do curl http://89.169.172.130:3000; done
 
 
 nano playbook.yaml
@@ -164,8 +164,8 @@ ansible-playbook --syntax-check -i inventory.yaml playbook.yaml
 
 ansible-playbook playbook.yaml -i inventory.yaml --tags="php_install"
 
-http://89.169.186.8
-http://89.169.180.207
+http://89.169.179.103
+http://89.169.182.143
 
 
 nano playbook.yaml
@@ -177,8 +177,8 @@ ansible-playbook --syntax-check -i inventory.yaml playbook.yaml
 
 ansible-playbook playbook.yaml -i inventory.yaml --tags="mediawiki_install"
 
-http://89.169.186.8
-http://89.169.180.207
+http://89.169.179.103
+http://89.169.182.143
 
 
 nano playbook.yaml
@@ -196,8 +196,8 @@ ansible-playbook --syntax-check -i inventory.yaml playbook.yaml
 
 ansible-playbook playbook.yaml -i inventory.yaml --tags="mediawiki_settings"
 
-http://89.169.186.8
-http://89.169.180.207
+http://89.169.179.103
+http://89.169.182.143
 
 
 
@@ -217,8 +217,8 @@ ansible-playbook --syntax-check -i inventory.yaml playbook.yaml
 
 ansible-playbook playbook.yaml -i inventory.yaml --tags="pg_master_replica"
 
-http://89.169.186.8
-http://89.169.180.207
+http://89.169.179.103
+http://89.169.182.143
 
 
 
@@ -227,7 +227,7 @@ ansible-galaxy init zabbix_server_install
 
 ansible-vault create vars/vault/zabbix_vault.yml
 ```
-zabbix_server_db_password: "z1a2b3b4i5x6"
+zabbix_server_db_password: "zabbix"
 ```
 
 yamllint playbook.yaml
@@ -236,4 +236,4 @@ ansible-playbook --syntax-check -i inventory.yaml playbook.yaml
 
 ansible-playbook playbook.yaml -i inventory.yaml --tags="zabbix_server_install"
 
-http://89.169.185.238:8080
+http://89.169.172.130:8080

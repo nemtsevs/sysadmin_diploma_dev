@@ -1,19 +1,19 @@
 ---
 # tasks file for zabbix_server_install
 
-- name: Установка docker-compose
+- name: Установить docker-compose
   ansible.builtin.apt:
     name: docker-compose
     state: present
 
-- name: Подмена docker-compose.yml
-  become: true
+
+- name: Подменить docker-compose.yml
   become_user: s20691161
   ansible.builtin.template:
     src: docker-compose.yml.j2
-    dest: ~/docker-compose.yml
+    dest: /home/s20691161/docker-compose.yml
 
-- name: Запуск docker-compose zabbix_server
-  become: true
+- name: Запустить docker-compose zabbix_server
   become_user: s20691161
-  ansible.builtin.command: "sudo docker-compose -f ~/docker-compose.yml up -d"
+  ansible.builtin.command: "\
+    docker-compose -f /home/s20691161/docker-compose.yml up -d"

@@ -10,7 +10,7 @@ services:
       DB_SERVER_HOST: zabbix-db
       MYSQL_DATABASE: zabbix
       MYSQL_USER: zabbix
-      MYSQL_PASSWORD: zabbix
+      MYSQL_PASSWORD: {{ zabbix_server_db_password }}
       MYSQL_ROOT_PASSWORD: root
     depends_on:
       - zabbix-db
@@ -26,7 +26,7 @@ services:
       DB_SERVER_HOST: zabbix-db
       MYSQL_DATABASE: zabbix
       MYSQL_USER: zabbix
-      MYSQL_PASSWORD: zabbix
+      MYSQL_PASSWORD: {{ zabbix_server_db_password }}
       ZBX_SERVER_HOST: zabbix-server
       PHP_TZ: "Europe/Moscow"
     depends_on:
@@ -42,7 +42,7 @@ services:
     environment:
       MYSQL_DATABASE: zabbix
       MYSQL_USER: zabbix
-      MYSQL_PASSWORD: zabbix
+      MYSQL_PASSWORD: {{ zabbix_server_db_password }}
       MYSQL_ROOT_PASSWORD: root
     volumes:
       - zabbix-db-data:/var/lib/mysql

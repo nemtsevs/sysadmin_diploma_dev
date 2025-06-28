@@ -228,6 +228,7 @@ ansible-vault create vars/vault/zabbix_vault.yml
 ```
 zabbix_server_db_password: "zabbix"
 ```
+ansible-vault edit vars/vault/zabbix_vault.yml
 
 yamllint playbook.yaml
 yamllint zabbix_server_install/tasks/main.yml

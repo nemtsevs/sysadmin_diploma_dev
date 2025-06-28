@@ -22,6 +22,8 @@ terraform init
 terraform validate
 terraform plan
 
+#terraform destroy -auto-approv
+
 terraform apply -auto-approve
 
 ```

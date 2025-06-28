@@ -20,8 +20,8 @@
   tags:
     - nginx_proxy
 
-- name: Update Upgrade
-  hosts: vm2, vm3
+- name: Обновление системы
+  hosts: wiki_media
   roles:
     - role: update_upgrade
   tags:

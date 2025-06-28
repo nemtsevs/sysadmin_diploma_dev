@@ -26,7 +26,7 @@
       {% if host != wiki_db_master_vm %} \
       host    replication     repuser        \
       {{ hostvars[host]['ansible_host'] }}/32      \
-      scram-sha-256
+      scram-sha-256 \
       {% endif %} \
       {% endfor %}"
     marker: "# {mark} ANSIBLE MANAGED BLOCK - REPLICATION"

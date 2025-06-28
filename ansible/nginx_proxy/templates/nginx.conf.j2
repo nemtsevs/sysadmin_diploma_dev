@@ -4,10 +4,8 @@ events {
 
 http {
     upstream backend {
-        {% for host in groups['nginx'] %}
-            {% if host != wiki_proxy_vm %}
+        {% for host in groups['wiki_media'] %}
         server {{ hostvars[host]['ansible_host'] }}:80;
-            {% endif %}
         {% endfor %}
     }
 

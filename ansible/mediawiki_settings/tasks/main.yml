@@ -6,7 +6,7 @@
 #     path: /var/www/html/LocalSettings.php
 #     state: absent
 
-- name: Запустить install.php для настройки MediaWiki
+- name: Запустить install.php для настройки init-конфига MediaWiki
   ansible.builtin.command: |
     php /var/www/html/maintenance/install.php \
       --confpath=/var/www/html \
@@ -27,14 +27,14 @@
   no_log: true  # Скрывыть пароли в логах
   when: inventory_hostname == wiki_media_init_vm
 
-- name: Копировать master-конфиг в переменную var_config
+- name: Копировать init-конфиг в переменную var_config
   ansible.builtin.slurp:
     src: /var/www/html/LocalSettings.php
   register: var_config
   delegate_to: "{{ wiki_media_init_vm }}"
   when: inventory_hostname != wiki_media_init_vm
 
-- name: Создать конфиг из переменной var_config
+- name: Создать на вм конфиг из переменной var_config
   ansible.builtin.copy:
     content: "{{ var_config.content | b64decode }}"
     dest: /var/www/html/LocalSettings.php
@@ -47,7 +47,7 @@
     replace: "\\1http://{{ hostvars[inventory_hostname]['ansible_host'] }}\\2"
   when: inventory_hostname != wiki_media_init_vm
 
-- name: Установить права конфига MediaWiki
+- name: Установить права на конфиг MediaWiki
   ansible.builtin.file:
     path: /var/www/html/LocalSettings.php
     owner: www-data

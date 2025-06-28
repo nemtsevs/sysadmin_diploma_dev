@@ -67,7 +67,7 @@
   tags:
     - mediawiki_settings
 
-- name: Настройка master-replica баз данных MediaWiki
+- name: Настройка master-replica баз MediaWiki
   hosts: wiki_db
   vars_files:
     - vars/vault/postgres_vault.yml

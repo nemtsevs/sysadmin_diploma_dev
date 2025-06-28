@@ -58,7 +58,7 @@
     - mediawiki_install
 
 - name: Первичная настройка MediaWiki
-  hosts: vm2, vm3
+  hosts: wiki_media
   vars_files:
     - vars/vault/postgres_vault.yml
     - vars/vault/mediawiki_vault.yml
@@ -67,8 +67,8 @@
   tags:
     - mediawiki_settings
 
-- name: Настройка postgres master-replica
-  hosts: vm2, vm3
+- name: Настройка master-replica баз данных MediaWiki
+  hosts: wiki_db
   vars_files:
     - vars/vault/postgres_vault.yml
   roles:
@@ -77,7 +77,9 @@
     - pg_master_replica
 
 - name: Установка Zabbix-сервера
-  hosts: vm1
+  vars_files:
+    - vars/vault/zabbix_vault.yml
+  hosts: zabbix_server
   roles:
     - role: zabbix_server_install
   tags:

@@ -28,7 +28,7 @@
     - update_upgrade
 
 - name: Установка PostgreSQL 14
-  hosts: vm2, vm3
+  hosts: wiki_db
   roles:
     - role: pg_install
   tags:

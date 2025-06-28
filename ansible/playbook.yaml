@@ -6,7 +6,7 @@
   tags:
     - default_packages
 
-- name: Установка Nginx
+- name: Установка Nginx и подмена главной веб-страницы
   hosts: nginx
   roles:
     - role: nginx_custom

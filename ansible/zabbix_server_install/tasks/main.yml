@@ -6,6 +6,11 @@
     name: docker-compose
     state: present
 
+- name: Добавить пользователя s20691161 в группу docker
+  ansible.builtin.user:
+    name: s20691161
+    groups: docker
+    append: yes
 
 - name: Подменить docker-compose.yml
   become_user: s20691161

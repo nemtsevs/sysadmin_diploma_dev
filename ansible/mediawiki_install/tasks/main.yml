@@ -36,4 +36,3 @@
   loop:
     - /var/www/html/index.html
     - /var/www/html/index.nginx-debian.html
-  become: true

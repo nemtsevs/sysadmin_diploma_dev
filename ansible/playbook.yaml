@@ -51,7 +51,7 @@
     - php_install
 
 - name: Установка MediaWiki
-  hosts: vm2, vm3
+  hosts: wiki_media
   roles:
     - role: mediawiki_install
   tags:

@@ -1,61 +1,59 @@
 ---
 # tasks file for pg_master_replica
 
-- name: Создать пользователя repuser
-  become: true
+- name: Мастер-сервер - Создать пользователя repuser
   become_user: postgres
   ansible.builtin.postgresql_user:
     name: repuser
     password: "{{ postgres_repuser_password }}"
     state: present
     role_attr_flags: "REPLICATION"
-  when: inventory_hostname == 'vm2'
+  when: inventory_hostname == wiki_db_master_vm
 
-- name: Настроить postgresql.conf для репликации
+- name: Мастер-сервер - Настроить postgresql.conf для репликации
   ansible.builtin.replace:
     path: /etc/postgresql/14/main/postgresql.conf
     regexp: "^#?\\s*wal_level\\s*=\\s*\\S+"
     replace: 'wal_level = replica'
-  when: inventory_hostname == 'vm2'
-  notify: "Postgresql Reloader"
+  when: inventory_hostname == wiki_db_master_vm
+  notify: "restart postgresql"
 
-- name: Настроить pg_hba.conf для репликации
+- name: Мастер-сервер - Настроить pg_hba.conf для репликации
   ansible.builtin.lineinfile:
     path: /etc/postgresql/14/main/pg_hba.conf
     line: "host    replication     repuser         \
-      {{ hostvars['vm3']['ansible_host'] }}/32       \
+      {{ hostvars[inventory_hostname]['ansible_host'] }}/32       \
       scram-sha-256"
     insertafter: EOF
-  when: inventory_hostname == 'vm2'
-  notify: "Postgresql Reloader"
+  when: inventory_hostname == wiki_db_master_vm
+  notify: "restart postgresql"
 
 - name: Резервный сервер - Настроить postgresql.conf
   ansible.builtin.replace:
     path: /etc/postgresql/14/main/postgresql.conf
     regexp: "^#?\\s*hot_standby\\s*=\\s*\\S+"
     replace: 'hot_standby = on'
-  when: inventory_hostname == 'vm3'
-  notify: "Postgresql Reloader"
+  when: inventory_hostname != wiki_db_master_vm
+  notify: "restart postgresql"
 
 - name: Резервный сервер - Остановить PostgreSQL
   ansible.builtin.systemd:
     name: postgresql
     state: stopped
-  when: inventory_hostname == 'vm3'
-  notify: "Postgresql Reloader"
+  when: inventory_hostname != wiki_db_master_vm
+  notify: "restart postgresql"
 
 - name: Резервный сервер - Почистить каталог PostgreSQL
   ansible.builtin.file:
     path: /var/lib/postgresql/14/main/
     state: absent
-  when: inventory_hostname == 'vm3'
-  notify: "Postgresql Reloader"
+  when: inventory_hostname != wiki_db_master_vm
+  notify: "restart postgresql"
 
 - name: Резервный сервер - Перенести данные мастера
-  become: true
   become_user: postgres
   ansible.builtin.command: "pg_basebackup \
-    -h {{ hostvars['vm2']['ansible_host'] }} \
+    -h {{ wiki_db_master_ip }} \
     -D /var/lib/postgresql/14/main \
     -U repuser \
     -P \
@@ -63,5 +61,5 @@
     -R"
   environment:
     PGPASSWORD: "{{ postgres_repuser_password }}"
-  when: inventory_hostname == 'vm3'
-  notify: "Postgresql Reloader"
+  when: inventory_hostname != wiki_db_master_vm
+  notify: "restart postgresql"

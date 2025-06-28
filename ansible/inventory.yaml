@@ -35,5 +35,6 @@ linux:  # Группа хостов
 
     wiki_proxy_vm: "{{ groups['wiki_proxy'][0] }}"
     wiki_media_init_vm: "{{ groups['wiki_media'][0] }}"
+    wiki_db_master_vm: "{{ groups['wiki_db'][0] }}"
     wiki_db_master_ip: "{{ hostvars[groups['wiki_db'][0]].ansible_host }}"
     zabbix_server_ip: "{{ hostvars[groups['zabbix_server'][0]].ansible_host }}"

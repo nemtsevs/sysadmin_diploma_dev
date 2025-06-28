@@ -8,7 +8,7 @@
 
 - name: Подменить главную веб-страницу
   ansible.builtin.template:
-    src: index.j2
+    src: index.nginx-debian.html.j2
     dest: /var/www/html/index.nginx-debian.html
   when: inventory_hostname != wiki_proxy_vm
   notify: "restart nginx"

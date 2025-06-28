@@ -4,11 +4,11 @@ linux:  # Группа хостов
     nginx:  # Имя подгруппы
       hosts:  # Узлы
         vm1:
-          ansible_host: 89.169.185.238
+          ansible_host: 89.169.172.130
         vm2:
-          ansible_host: 89.169.186.8
+          ansible_host: 89.169.179.103
         vm3:
-          ansible_host: 89.169.180.207
+          ansible_host: 89.169.182.143
   vars:  # Переменные, доступные или используемые для всех подгрупп
     ansible_user: s20691161  # имя пользователя
     connection_protocol: ssh  # тип подключения

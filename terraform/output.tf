@@ -8,7 +8,7 @@ output "vm_nat_ip" {
 
 output "s3_bucket_info" {
   value = {
-    name     = yandex_storage_bucket.ice_bucket.bucket
-    domain   = yandex_storage_bucket.ice_bucket.bucket_domain_name
+    name = yandex_storage_bucket.ice_bucket.bucket
+    domain = yandex_storage_bucket.ice_bucket.bucket_domain_name
   }
 }

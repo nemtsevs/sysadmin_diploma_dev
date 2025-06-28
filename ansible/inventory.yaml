@@ -13,3 +13,14 @@ linux:  # Группа хостов
     ansible_user: s20691161  # имя пользователя
     connection_protocol: ssh  # тип подключения
     ansible_become: true  # с другим пользователем после подключения
+
+    wiki_proxy_vm: "vm1"
+    wiki_proxy_ip: "{{ hostvars['vm1']['ansible_host'] }}"
+
+    wiki_pg_master_vm: "vm2"
+    wiki_pg_master_ip: "{{ hostvars['vm2']['ansible_host'] }}"
+    wiki_pg_replica_vm: "vm3"
+    wiki_pg_replica_ip: "{{ hostvars['vm3']['ansible_host'] }}"
+
+    zabbix_server_vm: "vm1"
+    zabbix_server_ip: "{{ hostvars['vm1']['ansible_host'] }}"

@@ -34,8 +34,8 @@
   tags:
     - pg_install
 
-- name: Подготовка postgres MediaWiki
-  hosts: vm2, vm3
+- name: Подготовка базы данных MediaWiki
+  hosts: wiki_db
   vars_files:
     - vars/vault/postgres_vault.yml
   roles:

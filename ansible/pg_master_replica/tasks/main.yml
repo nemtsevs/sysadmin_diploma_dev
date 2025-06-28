@@ -16,23 +16,21 @@
     regexp: "^#?\\s*wal_level\\s*=\\s*\\S+"
     replace: 'wal_level = replica'
   when: inventory_hostname == wiki_db_master_vm
-  notify: "restart postgresql"
 
 - name: Мастер-сервер - Настроить pg_hba.conf для репликации
-  ansible.builtin.blockinfile:
+  ansible.builtin.lineinfile:
     path: /etc/postgresql/14/main/pg_hba.conf
-    block: "\
-      {% for host in groups['wiki_db'] %} \
-      {% if host != wiki_db_master_vm %} \
-      host    replication     repuser        \
-      {{ hostvars[host]['ansible_host'] }}/32      \
-      scram-sha-256 \
-      {% endif %} \
-      {% endfor %}"
-    marker: "# {mark} ANSIBLE MANAGED BLOCK - REPLICATION"
+    line: "host    replication    repuser         \
+      {{ hostvars[item]['ansible_host'] }}/32       scram-sha-256"
     insertafter: EOF
+  loop: "{{ groups['wiki_db'] | difference([wiki_db_master_vm]) }}"
   when: inventory_hostname == wiki_db_master_vm
-  notify: "restart postgresql"
+
+- name: Мастер-сервер - Перезапустить Postgresql
+  ansible.builtin.systemd:
+    name: postgresql
+    state: restarted
+  when: inventory_hostname == wiki_db_master_vm
 
 - name: Резервный сервер - Настроить postgresql.conf
   ansible.builtin.replace:
@@ -40,21 +38,18 @@
     regexp: "^#?\\s*hot_standby\\s*=\\s*\\S+"
     replace: 'hot_standby = on'
   when: inventory_hostname != wiki_db_master_vm
-  notify: "restart postgresql"
 
 - name: Резервный сервер - Остановить PostgreSQL
   ansible.builtin.systemd:
     name: postgresql
     state: stopped
   when: inventory_hostname != wiki_db_master_vm
-  notify: "restart postgresql"
 
 - name: Резервный сервер - Почистить каталог PostgreSQL
   ansible.builtin.file:
     path: /var/lib/postgresql/14/main/
     state: absent
   when: inventory_hostname != wiki_db_master_vm
-  notify: "restart postgresql"
 
 - name: Резервный сервер - Перенести данные мастера
   become_user: postgres
@@ -68,4 +63,9 @@
   environment:
     PGPASSWORD: "{{ postgres_repuser_password }}"
   when: inventory_hostname != wiki_db_master_vm
-  notify: "restart postgresql"
+
+- name: Резервный сервер - Перезапустить Postgresql
+  ansible.builtin.systemd:
+    name: postgresql
+    state: restarted
+  when: inventory_hostname != wiki_db_master_vm

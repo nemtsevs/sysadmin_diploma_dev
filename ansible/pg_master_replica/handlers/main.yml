@@ -1,8 +1,2 @@
 ---
 # handlers file for pg_master_replica
-
-- name: Перезапустить Postgresql
-  ansible.builtin.systemd:
-    name: postgresql
-    state: restarted
-  listen: "restart postgresql"

@@ -14,7 +14,7 @@
     - nginx_custom
 
 - name: Настройка проксирующего Nginx
-  hosts: vm1
+  hosts: "{{ wiki_proxy_vm }}"
   roles:
     - role: nginx_proxy
   tags:

@@ -44,7 +44,7 @@
     - pg_mediawiki
 
 - name: Установка PHP
-  hosts: vm2, vm3
+  hosts: wiki_media
   roles:
     - role: php_install
   tags:

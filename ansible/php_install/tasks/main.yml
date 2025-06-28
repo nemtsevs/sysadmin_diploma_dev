@@ -1,17 +1,17 @@
 ---
 # tasks file for php_install
 
-- name: Остановка Nginx
+- name: Остановить Nginx
   ansible.builtin.service:
     name: nginx
     state: stopped
 
-- name: Отключение автозапуска Nginx
+- name: Отключить автозапуск Nginx
   ansible.builtin.service:
     name: nginx
     enabled: false
 
-- name: Установка программ PHP
+- name: Установить пакеты PHP
   ansible.builtin.apt:
     name: "{{ item }}"
     state: present

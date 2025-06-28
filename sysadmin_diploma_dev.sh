@@ -30,20 +30,20 @@ terraform apply -auto-approve
 Outputs:
 
 s3_bucket_info = {
-  "domain" = "cloud-s3-s20691161.storage.yandexcloud.net"
-  "name" = "cloud-s3-s20691161"
+  "domain" = "s3bucket-s20691161.storage.yandexcloud.net"
+  "name" = "s3bucket-s20691161"
 }
 vm_ip = {
-  "vm1" = "192.168.10.14"
-  "vm2" = "192.168.10.10"
-  "vm3" = "192.168.10.12"
+  "vm1" = "192.168.10.35"
+  "vm2" = "192.168.10.21"
+  "vm3" = "192.168.10.20"
 }
 vm_nat_ip = {
-  "vm1" = "51.250.21.37"
-  "vm2" = "51.250.109.60"
-  "vm3" = "51.250.19.163"
+  "vm1" = "89.169.172.130"
+  "vm2" = "89.169.179.103"
+  "vm3" = "89.169.182.143"
 }
-```
+
 
 unset TF_VAR_yc_secret_access_key
 

@@ -19,11 +19,15 @@
   notify: "restart postgresql"
 
 - name: Мастер-сервер - Настроить pg_hba.conf для репликации
-  ansible.builtin.lineinfile:
+  ansible.builtin.blockinfile:
     path: /etc/postgresql/14/main/pg_hba.conf
-    line: "host    replication     repuser         \
-      {{ hostvars[inventory_hostname]['ansible_host'] }}/32       \
-      scram-sha-256"
+    block: |
+      {% for host in groups['wiki_db'] %}
+      {% if host != wiki_db_master_vm %}
+      host    replication     repuser         {{ hostvars[host]['ansible_host'] }}/32       scram-sha-256
+      {% endif %}
+      {% endfor %}
+    marker: "# {mark} ANSIBLE MANAGED BLOCK - REPLICATION"
     insertafter: EOF
   when: inventory_hostname == wiki_db_master_vm
   notify: "restart postgresql"

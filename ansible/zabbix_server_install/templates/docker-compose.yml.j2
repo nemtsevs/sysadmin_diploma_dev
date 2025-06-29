@@ -28,6 +28,7 @@ services:
       MYSQL_USER: zabbix
       MYSQL_PASSWORD: {{ zabbix_server_db_password }}
       ZBX_SERVER_HOST: zabbix-server
+      ZBX_DEFAULT_LANG: "ru_RU"
       PHP_TZ: "Europe/Moscow"
     depends_on:
       - zabbix-server

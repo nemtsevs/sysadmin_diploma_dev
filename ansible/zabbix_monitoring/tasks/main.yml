@@ -22,7 +22,7 @@
     executable: pip3
 
 - name: Получить Zabbix API auth token
-  uri:
+  ansible.builtin.uri:
     url: "http://{{ zabbix_server_ip }}:8080/api_jsonrpc.php"
     method: POST
     headers:
@@ -45,7 +45,7 @@
   when: zabbix_auth is defined
 
 # - name: Обновить имя zabbix-агента
-#   uri:
+#   ansible.builtin.uri:
 #     url: "http://{{ zabbix_server_ip }}:8080/api_jsonrpc.php"
 #     method: POST
 #     headers:
@@ -76,7 +76,7 @@
 #   when: api_result is defined
 
 # - name: Выход из Zabbix API
-#   uri:
+#   ansible.builtin.uri:
 #     url: "http://{{ zabbix_server_ip }}:8080/api_jsonrpc.php"
 #     method: POST
 #     headers:

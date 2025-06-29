@@ -57,7 +57,6 @@
         name: "MediaWiki Template HTTP Service Monitoring"
         groups:
           - groupid: "22"
-      auth: "{{ auth_result.json.result }}"
       id: 2
     status_code: 200
     timeout: 30

@@ -36,3 +36,4 @@
     pull: false
   environment:
     COMPOSE_PROJECT_NAME: zabbix_server
+    ZBX_API_URL: /api_jsonrpc.php

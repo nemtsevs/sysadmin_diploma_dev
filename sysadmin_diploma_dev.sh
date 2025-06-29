@@ -254,3 +254,4 @@ ansible-playbook --syntax-check -i inventory.yaml playbook.yaml
 ansible-playbook playbook.yaml -i inventory.yaml --tags="zabbix_monitoring"
 
 http://89.169.172.130:8080
+http://89.169.172.130:8080/zabbix/api_jsonrpc.php

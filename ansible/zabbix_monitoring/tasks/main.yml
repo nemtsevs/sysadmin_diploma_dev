@@ -14,7 +14,7 @@
 
 - name: Create a template for HTTP monitoring
   community.zabbix.zabbix_template:
-    server_url: "http://{{ zabbix_server_ip }}/zabbix/api_jsonrpc.php"
+    server_url: "http://{{ zabbix_server_ip }}/api_jsonrpc.php"
     login_user: Admin
     login_password: "{{ zabbix_server_api_admin_password }}"
     template_name: "MediaWiki Template HTTP Service Monitoring"

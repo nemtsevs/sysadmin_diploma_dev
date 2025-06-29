@@ -21,7 +21,6 @@
   ansible.builtin.command: mountpoint -q /mnt/s3bucket
   ignore_errors: true
   register: mount_check
-  changed_when: false
 
 - name: Отмонтировать, если смонтирован
   ansible.builtin.command: umount /mnt/s3bucket
@@ -34,6 +33,7 @@
     mode: '0755'
     owner: s20691161
     group: s20691161
+    recurse: true
 
 - name: Монтировать бакет
   become_user: s20691161

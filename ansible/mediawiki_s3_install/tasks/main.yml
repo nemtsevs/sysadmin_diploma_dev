@@ -40,6 +40,7 @@
     group: s20691161
     mode: '0755'
 
+- name: Монтировать бакет
   ansible.builtin.mount:
     path: /mnt/s3bucket
     src: "{{ wiki_s3_bucket }}"

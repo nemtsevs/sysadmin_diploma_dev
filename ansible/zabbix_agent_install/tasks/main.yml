@@ -1,2 +1,18 @@
 ---
 # tasks file for zabbix_agent_install
+
+- name: Установить zabbix-agent
+  ansible.builtin.apt:
+    name: zabbix-agent
+    state: present
+
+- name: Подменить zabbix_agentd.conf
+  ansible.builtin.template:
+    src: zabbix_agentd.conf.j2
+    dest: /etc/zabbix/zabbix_agentd.conf
+
+- name: Перезапустить zabbix-agent и добавить в автозагрузку
+  ansible.builtin.service:
+    name: zabbix-agent
+    state: restarted
+    enabled: true

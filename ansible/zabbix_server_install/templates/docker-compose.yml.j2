@@ -54,6 +54,7 @@ services:
     container_name: zabbix-agent
     environment:
       ZBX_HOSTNAME: "Zabbix server"
+      ZBX_HOSTNAMEITEM: "system.hostname"
       ZBX_SERVER_HOST: zabbix-server
     ports:
       - "10050:10050"

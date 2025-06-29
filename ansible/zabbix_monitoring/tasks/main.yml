@@ -38,36 +38,36 @@
   register: zabbix_auth
   no_log: true
 
-# - name: Обновить имя zabbix-агента
-#   ansible.builtin.uri:
-#     url: "http://{{ zabbix_server_ip }}:8080/api_jsonrpc.php"
-#     method: POST
-#     headers:
-#       Content-Type: "application/json-rpc"
-#       Authorization: "Bearer {{ zabbix_auth.json.result }}"
-#     body:
-#       jsonrpc: "2.0"
-#       method: "hostinterface.update"
-#       params:
-#         filter: {"host": "Zabbix server"}
-#         interfaces: [{
-#           "type": 1,
-#           "main": 1,
-#           "useip": 0,
-#           "dns": "zabbix-agent",
-#           "port": "10050"
-#         }]
-#       id: 2
-#     status_code: 200
-#     timeout: 30
-#   register: api_result
-#   changed_when: api_result.json.result is defined
-#   when: zabbix_auth.json.result is defined
+- name: Обновить имя zabbix-агента
+  ansible.builtin.uri:
+    url: "http://{{ zabbix_server_ip }}:8080/api_jsonrpc.php"
+    method: POST
+    headers:
+      Authorization: "Bearer {{ zabbix_auth.json.result }}"
+    body:
+      jsonrpc: "2.0"
+      method: "hostinterface.update"
+      params:
+        filter: {"host": "Zabbix server"}
+        interfaces: [{
+          "type": 1,
+          "main": 1,
+          "useip": 0,
+          "dns": "zabbix-agent",
+          "port": "10050"
+        }]
+      id: 2
+    status_code: 200
+    timeout: 30
+  when: zabbix_auth.json.result is defined
+  register: api_result
+  changed_when: api_result.json.result is defined
+  no_log: true
 
-# - name: Вывести результат API запроса
-#   debug:
-#     var: api_result.json
-#   when: api_result is defined
+- name: Вывести ответ API
+  debug:
+    var: api_result
+  when: api_result is defined
 
 - name: Выход из Zabbix API
   ansible.builtin.uri:
@@ -83,6 +83,5 @@
       id: 3
     status_code: 200
     timeout: 5
-  register: api_logout_result
-  no_log: true
   when: zabbix_auth.json.result is defined
+  no_log: true

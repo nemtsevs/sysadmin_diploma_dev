@@ -18,14 +18,14 @@
     and lookup('env', 'TF_VAR_yc_secret_access_key') is defined
 
 - name: Проверить, смонтирован ли бакет
-  ansible.builtin.command: mountpoint -q /mnt/s3bucket
+  ansible.builtin.stat:
+    path: /mnt/s3bucket
   register: mount_check
-  ignore_errors: true
   changed_when: false
 
 - name: Отмонтировать бакет если смонтирован
   ansible.builtin.command: umount /mnt/s3bucket
-  when: mount_check.rc == 0
+  when: mount_check.stat.ismount is defined and mount_check.stat.ismount
 
 - name: Создать точку монтирования
   ansible.builtin.file:

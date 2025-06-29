@@ -74,18 +74,25 @@
 #     var: api_result.json
 #   when: api_result is defined
 
-# - name: Выход из Zabbix API
-#   ansible.builtin.uri:
-#     url: "http://{{ zabbix_server_ip }}:8080/api_jsonrpc.php"
-#     method: POST
-#     headers:
-#       Content-Type: "application/json-rpc"
-#       Authorization: "Bearer {{ zabbix_auth.json.result }}"
-#     body:
-#       jsonrpc: "2.0"
-#       method: "user.logout"
-#       params: []
-#       id: 3
-#     status_code: 200
-#     timeout: 5
-#   when: zabbix_auth.json.result is defined
+- name: Выход из Zabbix API
+  ansible.builtin.uri:
+    url: "http://{{ zabbix_server_ip }}:8080/api_jsonrpc.php"
+    method: POST
+    headers:
+      Content-Type: "application/json-rpc"
+      Authorization: "Bearer {{ zabbix_auth.json.result }}"
+    body_format: json
+    body:
+      jsonrpc: "2.0"
+      method: "user.logout"
+      params: []
+      id: 3
+    status_code: 200
+    timeout: 5
+  register: api_logout_result
+  when: zabbix_auth.json.result is defined
+
+- name: Вывести api_logout_result
+  debug:
+    var: api_logout_result
+  when: api_logout_result is defined

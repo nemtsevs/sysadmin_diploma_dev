@@ -87,13 +87,13 @@
     timeout: 30
   when: zbx_token is defined
     and zbx_agent_interface_id is defined
-  register: api_result
-  changed_when: api_result.json.result is defined
+  register: api_response
+  changed_when: api_response.json.result is defined
 
 - name: Вывести ответ API
   debug:
-    var: api_result.json.result
-  when: api_result.json.result is defined
+    var: api_response.json.result
+  when: api_response.json.result is defined
 
 - name: Выход из Zabbix API
   ansible.builtin.uri:

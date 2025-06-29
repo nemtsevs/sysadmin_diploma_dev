@@ -1,6 +1,11 @@
 ---
 # tasks file for zabbix_monitoring
 
+- name: Install Zabbix API package via apt
+  ansible.builtin.apt:
+    name: python3-zabbix-api
+    state: present
+
 - name: Create a template for HTTP monitoring
   community.zabbix.zabbix_template:
     server_url: "http://{{ zabbix_server_ip }}/zabbix/api_jsonrpc.php"

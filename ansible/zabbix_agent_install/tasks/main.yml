@@ -52,14 +52,13 @@
           - type: 1
             main: 1
             useip: 1
-            ip: "{{ ansible_default_ipv4.address }}"
+            ip: "{{ hostvars[inventory_hostname]['ansible_host'] }}"
             port: "10050"
         groups:
-          - groupid: "2"  # Linux servers
+          - groupid: "2"
       auth: "{{ zabbix_auth.json.result | default(omit) }}"
       id: 2
     status_code: 200
     timeout: 10
   register: host_registration
   when: zabbix_auth is succeeded and zabbix_auth.json.result is defined
-

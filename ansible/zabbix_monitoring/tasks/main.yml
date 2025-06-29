@@ -21,7 +21,7 @@
     name: zabbix-api==0.5.4
     executable: pip3
 
-- name: Get Zabbix API auth token
+- name: Получить Zabbix API auth token
   uri:
     url: "http://{{ zabbix_server_ip }}:8080/api_jsonrpc.php"
     method: POST
@@ -39,14 +39,13 @@
     timeout: 10
   register: zabbix_auth
   no_log: true
-  ignore_errors: true
 
 - name: Create HTTP monitoring template
   uri:
     url: "http://{{ zabbix_server_ip }}:8080/api_jsonrpc.php"
     method: POST
     headers:
-      Content-Type: "application/json"
+      Content-Type: "application/json-rpc"
       Authorization: "Bearer {{ zabbix_auth.json.result }}"
     body_format: json
     body:
@@ -60,9 +59,8 @@
       id: 2
     status_code: 200
     timeout: 30
-  register: template_result
 
-- name: Logout from Zabbix API
+- name: Выход из Zabbix API
   uri:
     url: "http://{{ zabbix_server_ip }}:8080/api_jsonrpc.php"
     method: POST

@@ -19,7 +19,6 @@
 
 - name: Отмонтировать, если смонтирован
   ansible.builtin.command: umount /mnt/s3bucket
-  ignore_errors: true
 
 - name: Создать точку монтирования
   ansible.builtin.file:
@@ -28,7 +27,6 @@
     mode: '0755'
     owner: s20691161
     group: s20691161
-  ignore_errors: true
 
 - name: Монтировать бакет
   become_user: s20691161
@@ -36,4 +34,3 @@
     s3fs {{ wiki_s3_bucket }} /mnt/s3bucket
     -o url=https://storage.yandexcloud.net
     -o passwd_file=/home/s20691161/.passwd-s3fs
-  when: mount_check.rc != 0

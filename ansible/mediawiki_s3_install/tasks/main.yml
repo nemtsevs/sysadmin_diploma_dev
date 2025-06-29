@@ -10,8 +10,8 @@
   become_user: s20691161
   ansible.builtin.copy:
     dest: /home/s20691161/.passwd-s3fs
-    content: >
-      {{ lookup('env', 'TF_VAR_yc_access_key_id') }}:
+    content: "\
+      {{ lookup('env', 'TF_VAR_yc_access_key_id') }}:\
       {{ lookup('env', 'TF_VAR_yc_secret_access_key') }}"
     mode: '0600'
   when: lookup('env', 'TF_VAR_yc_access_key_id') is defined

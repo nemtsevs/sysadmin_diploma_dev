@@ -250,18 +250,6 @@ zabbix_server_api_admin_password: "zabbix"
 ```
 
 nano playbook.yaml
-ansible-galaxy init zabbix_agent_install
-
-yamllint playbook.yaml
-yamllint zabbix_agent_install/tasks/main.yml
-ansible-playbook --syntax-check -i inventory.yaml playbook.yaml
-
-ansible-playbook playbook.yaml -i inventory.yaml --tags="zabbix_agent_install"
-
-http://89.169.176.105:8080
-
-
-nano playbook.yaml
 ansible-galaxy init zabbix_monitoring
 
 yamllint playbook.yaml
@@ -272,6 +260,18 @@ ansible-playbook playbook.yaml -i inventory.yaml --tags="zabbix_monitoring"
 
 http://89.169.176.105:8080
 http://89.169.176.105:8080/api_jsonrpc.php
+
+
+nano playbook.yaml
+ansible-galaxy init zabbix_agent_install
+
+yamllint playbook.yaml
+yamllint zabbix_agent_install/tasks/main.yml
+ansible-playbook --syntax-check -i inventory.yaml playbook.yaml
+
+ansible-playbook playbook.yaml -i inventory.yaml --tags="zabbix_agent_install"
+
+http://89.169.176.105:8080
 
 
 nano playbook.yaml

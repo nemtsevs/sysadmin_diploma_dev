@@ -56,8 +56,7 @@
           - type: &interfaceid 1  # Zabbix Agent
             main: *interfaceid
             useip: 1
-            ip: "{{ hostvars[inventory_hostname]['ansible_host'] \
-              | default(ansible_host) }}"
+            ip: "{{ ansible_host }}"
             port: "10050"
         templates:
           - templateid: 10001  # Linux by Zabbix agent

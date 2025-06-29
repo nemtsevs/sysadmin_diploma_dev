@@ -17,7 +17,7 @@
   when: lookup('env', 'TF_VAR_yc_access_key_id') is defined
     and lookup('env', 'TF_VAR_yc_secret_access_key') is defined
 
-- name: Проверить монтирование
+- name: Проверить монтирование бакета
   ansible.builtin.set_fact:
     is_mounted: >
       {{ ansible_mounts

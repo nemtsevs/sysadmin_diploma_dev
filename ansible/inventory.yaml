@@ -4,9 +4,9 @@ linux:  # Группа хостов
     nginx:  # Подгруппа хостов
       hosts:  # Узлы
         vm1: &vm1
-          ansible_host: 89.169.177.89
-        vm2: &vm2
           ansible_host: 89.169.176.105
+        vm2: &vm2
+          ansible_host: 89.169.177.89
         vm3: &vm3
           ansible_host: 89.169.183.167
 

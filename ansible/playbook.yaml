@@ -102,3 +102,10 @@
     - role: zabbix_monitoring
   tags:
     - zabbix_monitoring
+
+- name: Настройка s3-бакета для MediaWiki
+  hosts: wiki_media
+  roles:
+    - role: mediawiki_s3_install
+  tags:
+    - mediawiki_s3_install

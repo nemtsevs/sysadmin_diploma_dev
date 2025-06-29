@@ -239,6 +239,11 @@ ansible-playbook playbook.yaml -i inventory.yaml --tags="zabbix_server_install"
 http://89.169.172.130:8080
 
 
+ansible-vault edit vars/vault/zabbix_vault.yml
+```
+zabbix_server_api_admin_password: "zabbix"
+```
+
 nano playbook.yaml
 ansible-galaxy init zabbix_agent_install
 
@@ -254,11 +259,6 @@ http://89.169.172.130:8080
 nano playbook.yaml
 ansible-galaxy init zabbix_monitoring
 
-ansible-vault edit vars/vault/zabbix_vault.yml
-```
-zabbix_server_api_admin_password: "zabbix"
-```
-
 yamllint playbook.yaml
 yamllint zabbix_monitoring/tasks/main.yml
 ansible-playbook --syntax-check -i inventory.yaml playbook.yaml
@@ -267,3 +267,13 @@ ansible-playbook playbook.yaml -i inventory.yaml --tags="zabbix_monitoring"
 
 http://89.169.172.130:8080
 http://89.169.172.130:8080/api_jsonrpc.php
+
+
+nano playbook.yaml
+ansible-galaxy init mediawiki_s3_install
+
+yamllint playbook.yaml
+yamllint mediawiki_s3_install/tasks/main.yml
+ansible-playbook --syntax-check -i inventory.yaml playbook.yaml
+
+ansible-playbook playbook.yaml -i inventory.yaml --tags="mediawiki_s3_install"

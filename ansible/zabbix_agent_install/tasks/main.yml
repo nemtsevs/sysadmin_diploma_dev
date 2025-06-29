@@ -47,7 +47,7 @@
     url: "http://{{ zabbix_server_ip }}:8080/api_jsonrpc.php"
     method: POST
     headers:
-      Content-Type: application/json
+      Content-Type: "application/json-rpc"
     body_format: json
     body:
       jsonrpc: "2.0"
@@ -55,15 +55,27 @@
       params:
         host: "{{ inventory_hostname }}"
         interfaces:
-          - type: 1
+          - type: 1  # 1 = Агент Zabbix
             main: 1
             useip: 1
-            ip: "{{ ansible_host }}"
+            ip: "{{ hostvars[inventory_hostname]['ansible_host'] | default(ansible_host) }}"
+            dns: ""
             port: "10050"
         groups:
-          - groupid: "2"  # Обычно "Linux servers"
+          - groupid: "{{ zabbix_linux_groupid | default('2') }}"
+        tags:
+          - tag: "Host name"
+            value: "{{ inventory_hostname }}"
       auth: "{{ zabbix_auth.json.result }}"
       id: 2
     status_code: 200
     timeout: 10
+  register: host_registration
+  ignore_errors: yes
   when: zabbix_auth.json.result is defined
+
+- name: Debug host registration result
+  debug:
+    var: host_registration.json
+  when: host_registration.json is defined
+

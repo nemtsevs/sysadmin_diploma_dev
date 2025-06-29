@@ -239,6 +239,9 @@ ansible-playbook playbook.yaml -i inventory.yaml --tags="zabbix_server_install"
 http://89.169.172.130:8080
 
 
+nano playbook.yaml
+ansible-galaxy init zabbix_agent_install
+
 yamllint playbook.yaml
 yamllint zabbix_agent_install/tasks/main.yml
 ansible-playbook --syntax-check -i inventory.yaml playbook.yaml

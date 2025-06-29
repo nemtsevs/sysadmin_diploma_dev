@@ -54,9 +54,8 @@
           - type: 1
             main: 1
             useip: 1
-            ip: >
-              {{ hostvars[inventory_hostname]['ansible_host']
-              | default(ansible_host) }}
+            ip: "{{ hostvars[inventory_hostname]['ansible_host'] \
+              | default(ansible_host) }}"
             dns: "{{ ansible_facts['hostname'] }}"
             port: "10050"
         groups:
@@ -64,13 +63,12 @@
       id: 20
     status_code: 200
     timeout: 30
-  when: zbx_token is defined
   register: host_registration
   changed_when: host_registration.json.result is defined
 
 - name: Вывести результат регистрации хоста
   debug:
-    var: host_registration
+    var: host_registration.json
 
 - name: Выход из Zabbix API
   ansible.builtin.uri:

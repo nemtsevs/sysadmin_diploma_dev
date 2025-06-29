@@ -244,7 +244,7 @@ ansible-galaxy init zabbix_monitoring
 
 ansible-vault edit vars/vault/zabbix_vault.yml
 ```
-zabbix_server_admin_password: "zabbix"
+zabbix_server_api_admin_password: "zabbix"
 ```
 
 yamllint playbook.yaml

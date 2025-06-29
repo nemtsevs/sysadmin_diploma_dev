@@ -28,8 +28,9 @@
       jsonrpc: "2.0"
       method: "user.login"
       params:
-        user: "Admin"
-        password: zabbix
+        credentials:
+          user: "Admin"
+          password: "{{ zabbix_server_api_admin_password }}"
       id: 1
     status_code: 200
     timeout: 5

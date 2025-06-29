@@ -21,12 +21,49 @@
     name: zabbix-api==0.5.4
     executable: pip3
 
-- name: Create a template for HTTP monitoring
-  community.zabbix.zabbix_template:
-    server_url: "http://{{ zabbix_server_ip }}:8080/api_jsonrpc.php"
-    login_user: Admin
-    login_password: "{{ zabbix_server_api_admin_password }}"
-    template_name: "MediaWiki Template HTTP Service Monitoring"
-    template_groups:
-      - "Templates"
-    state: present
+- name: Get Zabbix API auth token
+  uri:
+    url: "http://{{ zabbix_server_ip }}:8080/api_jsonrpc.php"
+    method: POST
+    body_format: json
+    body:
+      jsonrpc: "2.0"
+      method: "user.login"
+      params:
+        username: "Admin"
+        password: "{{ zabbix_server_api_admin_password }}"
+      id: 1
+    status_code: 200
+  register: auth_result
+  no_log: true
+
+- name: Create HTTP monitoring template
+  uri:
+    url: "http://{{ zabbix_server_ip }}:8080/api_jsonrpc.php"
+    method: POST
+    body_format: json
+    body:
+      jsonrpc: "2.0"
+      method: "template.create"
+      params:
+        host: "MediaWiki Template HTTP Service Monitoring"
+        groups:
+          - groupid: "1"  # ID группы Templates
+      auth: "{{ auth_result.json.result }}"
+      id: 2
+    status_code: 200
+  register: template_result
+
+- name: Logout from Zabbix API
+  uri:
+    url: "http://{{ zabbix_server_ip }}:8080/api_jsonrpc.php"
+    method: POST
+    body_format: json
+    body:
+      jsonrpc: "2.0"
+      method: "user.logout"
+      params: []
+      auth: "{{ auth_result.json.result }}"
+      id: 3
+    status_code: 200
+  when: auth_result is success

@@ -25,6 +25,8 @@
   uri:
     url: "http://{{ zabbix_server_ip }}:8080/api_jsonrpc.php"
     method: POST
+    headers:
+      Content-Type: "application/json-rpc"
     body_format: json
     body:
       jsonrpc: "2.0"
@@ -34,8 +36,10 @@
         password: "{{ zabbix_server_api_admin_password }}"
       id: 1
     status_code: 200
-  register: auth_result
-  #no_log: true
+    timeout: 10
+  register: zabbix_auth
+  no_log: true
+  ignore_errors: true
 
 - name: Create HTTP monitoring template
   uri:
@@ -43,6 +47,7 @@
     method: POST
     headers:
       Content-Type: "application/json"
+      Authorization: "Bearer {{ zabbix_auth.json.result }}"
     body_format: json
     body:
       jsonrpc: "2.0"
@@ -62,12 +67,17 @@
   uri:
     url: "http://{{ zabbix_server_ip }}:8080/api_jsonrpc.php"
     method: POST
+    headers:
+      Content-Type: "application/json-rpc"
+      Authorization: "Bearer {{ zabbix_auth.json.result }}"
     body_format: json
     body:
       jsonrpc: "2.0"
       method: "user.logout"
       params: []
-      auth: "{{ auth_result.json.result }}"
       id: 3
     status_code: 200
-  when: auth_result is success
+    timeout: 5
+  when: zabbix_auth.json.result is defined
+  ignore_errors: true
+  no_log: true

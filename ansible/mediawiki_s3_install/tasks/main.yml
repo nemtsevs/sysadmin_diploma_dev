@@ -17,15 +17,9 @@
   when: lookup('env', 'TF_VAR_yc_access_key_id') is defined
     and lookup('env', 'TF_VAR_yc_secret_access_key') is defined
 
-- name: Проверить, смонтирован ли каталог
-  ansible.builtin.command: mountpoint -q /mnt/s3bucket
-  ignore_errors: yes
-  register: mount_check
-  changed_when: false
-
 - name: Отмонтировать, если смонтирован
   ansible.builtin.command: umount /mnt/s3bucket
-  when: mount_check.rc == 0
+  ignore_errors: true
 
 - name: Создать точку монтирования
   ansible.builtin.file:
@@ -34,7 +28,7 @@
     mode: '0755'
     owner: s20691161
     group: s20691161
-    recurse: true
+  ignore_errors: true
 
 - name: Монтировать бакет
   become_user: s20691161

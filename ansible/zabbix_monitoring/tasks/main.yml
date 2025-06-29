@@ -7,9 +7,16 @@
     state: present
     update_cache: true
 
+- name: Remove incompatible Zabbix API libraries
+  ansible.builtin.pip:
+    name:
+      - zabbix-api
+      - zabbix-api-pyzbx
+    state: absent
+
 - name: Install correct Zabbix API library
   ansible.builtin.pip:
-    name: pyzabbix
+    name: py-zabbix
     executable: pip3
 
 - name: Create a template for HTTP monitoring

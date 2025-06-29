@@ -12,11 +12,13 @@
     name:
       - zabbix-api
       - zabbix-api-pyzbx
+      - pyzabbix
+      - py-zabbix
     state: absent
 
 - name: Install correct Zabbix API library
   ansible.builtin.pip:
-    name: py-zabbix
+    name: zabbix-api==0.5.4
     executable: pip3
 
 - name: Create a template for HTTP monitoring

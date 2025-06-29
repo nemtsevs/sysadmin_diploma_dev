@@ -27,7 +27,6 @@
     method: POST
     headers:
       Content-Type: "application/json-rpc"
-    body_format: json
     body:
       jsonrpc: "2.0"
       method: "user.login"
@@ -38,63 +37,50 @@
     status_code: 200
     timeout: 10
   register: zabbix_auth
-  no_log: true
 
-- name: Create HTTP monitoring template
-  uri:
-    url: "http://{{ zabbix_server_ip }}:8080/api_jsonrpc.php"
-    method: POST
-    headers:
-      Content-Type: "application/json-rpc"
-      Authorization: "Bearer {{ zabbix_auth.json.result }}"
-    body_format: json
-    body: |
-      {
-        "jsonrpc": "2.0",
-        "method": "hostinterface.update",
-        "params": {
-          "filter": {
-            "host": "Zabbix server"
-          },
-          "interfaces": [
-            {
-              "type": 1,
-              "main": 1,
-              "useip": 0,
-              "ip": "",
-              "dns": "zabbix-agent",
-              "port": "10050"
-            }
-          ]
-        },
-        "id": 2
-      }
-    status_code: 200
-    timeout: 30
-  register: api_result
-  changed_when: api_result.json.result is defined
-  when: zabbix_auth.json.result is defined
+# - name: Обновить имя zabbix-агента
+#   uri:
+#     url: "http://{{ zabbix_server_ip }}:8080/api_jsonrpc.php"
+#     method: POST
+#     headers:
+#       Content-Type: "application/json-rpc"
+#       Authorization: "Bearer {{ zabbix_auth.json.result }}"
+#     body:
+#       jsonrpc: "2.0"
+#       method: "hostinterface.update"
+#       params:
+#         filter: {"host": "Zabbix server"}
+#         interfaces: [{
+#           "type": 1,
+#           "main": 1,
+#           "useip": 0,
+#           "dns": "zabbix-agent",
+#           "port": "10050"
+#         }]
+#       id: 2
+#     status_code: 200
+#     timeout: 30
+#   register: api_result
+#   changed_when: api_result.json.result is defined
+#   when: zabbix_auth.json.result is defined
 
-- name: Вывести результат API запроса
-  debug:
-    var: api_result.json
-  when: api_result.json is defined
+# - name: Вывести результат API запроса
+#   debug:
+#     var: api_result.json
+#   when: api_result is defined
 
-- name: Выход из Zabbix API
-  uri:
-    url: "http://{{ zabbix_server_ip }}:8080/api_jsonrpc.php"
-    method: POST
-    headers:
-      Content-Type: "application/json-rpc"
-      Authorization: "Bearer {{ zabbix_auth.json.result }}"
-    body_format: json
-    body:
-      jsonrpc: "2.0"
-      method: "user.logout"
-      params: []
-      id: 3
-    status_code: 200
-    timeout: 5
-  when: zabbix_auth.json.result is defined
-  ignore_errors: true
-  no_log: true
+# - name: Выход из Zabbix API
+#   uri:
+#     url: "http://{{ zabbix_server_ip }}:8080/api_jsonrpc.php"
+#     method: POST
+#     headers:
+#       Content-Type: "application/json-rpc"
+#       Authorization: "Bearer {{ zabbix_auth.json.result }}"
+#     body:
+#       jsonrpc: "2.0"
+#       method: "user.logout"
+#       params: []
+#       id: 3
+#     status_code: 200
+#     timeout: 5
+#   when: zabbix_auth.json.result is defined

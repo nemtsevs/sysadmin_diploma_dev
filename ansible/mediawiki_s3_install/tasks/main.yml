@@ -1,2 +1,14 @@
 ---
 # tasks file for mediawiki_s3_install
+
+- name: Create credentials file from environment variables
+  shell: |
+    echo "$TF_VAR_yc_access_key_id:$TF_VAR_yc_secret_access_key" > {{ passwd_file }}
+    chmod 600 {{ passwd_file }}
+  args:
+    executable: /bin/bash
+  environment:
+    TF_VAR_yc_access_key_id: "{{ s3_access_key }}"
+    TF_VAR_yc_secret_access_key: "{{ s3_secret_key }}"
+  no_log: true
+  when: s3_access_key is defined and s3_secret_key is defined

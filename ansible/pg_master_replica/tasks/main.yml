@@ -20,7 +20,7 @@
 - name: Мастер-сервер - Настроить pg_hba.conf для репликации
   ansible.builtin.lineinfile:
     path: /etc/postgresql/14/main/pg_hba.conf
-    line: "host    replication    repuser         \
+    line: "host    replication     repuser         \
       {{ hostvars[item]['ansible_host'] }}/32       scram-sha-256"
     insertafter: EOF
   loop: "{{ groups['wiki_db'] | difference([wiki_db_master_vm]) }}"

@@ -35,7 +35,7 @@
       id: 1
     status_code: 200
   register: auth_result
-  no_log: true
+  #no_log: true
 
 - name: Create HTTP monitoring template
   uri:

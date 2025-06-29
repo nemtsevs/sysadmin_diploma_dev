@@ -85,6 +85,15 @@
   tags:
     - zabbix_server_install
 
+- name: Настройка zabbix-мониторинга
+  vars_files:
+    - vars/vault/zabbix_vault.yml
+  hosts: zabbix_server
+  roles:
+    - role: zabbix_monitoring
+  tags:
+    - zabbix_monitoring
+
 - name: Установка Zabbix-агента
   vars_files:
     - vars/vault/zabbix_vault.yml
@@ -93,15 +102,6 @@
     - role: zabbix_agent_install
   tags:
     - zabbix_agent_install
-
-- name: Настройка zabbix-мониторинга сервиса
-  vars_files:
-    - vars/vault/zabbix_vault.yml
-  hosts: zabbix_server
-  roles:
-    - role: zabbix_monitoring
-  tags:
-    - zabbix_monitoring
 
 - name: Настройка s3-бакета для MediaWiki
   hosts: wiki_media

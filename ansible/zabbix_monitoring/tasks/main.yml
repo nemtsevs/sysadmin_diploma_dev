@@ -84,4 +84,3 @@
     status_code: 200
     timeout: 5
   when: zabbix_auth.json.result is defined
-  no_log: true

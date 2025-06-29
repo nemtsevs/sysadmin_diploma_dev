@@ -17,17 +17,20 @@
   when: lookup('env', 'TF_VAR_yc_access_key_id') is defined
     and lookup('env', 'TF_VAR_yc_secret_access_key') is defined
 
-- name: Проверить, смонтирован ли бакет
-  become: true
-  ansible.builtin.stat:
-    path: /mnt/s3bucket
+- name: Проверить монтирование через /proc/mounts
+  ansible.builtin.shell: |
+    if grep -q " /mnt/s3bucket " /proc/mounts; then
+      echo "mounted"
+    else
+      echo "not mounted"
+    fi
   register: mount_check
   changed_when: false
+  ignore_errors: true
 
 - name: Отмонтировать бакет если смонтирован
-  become_user: s20691161
   ansible.builtin.command: umount /mnt/s3bucket
-  when: mount_check.stat.ismount is defined and mount_check.stat.ismount
+  when: "'mounted' in mount_check.stdout"
 
 - name: Создать точку монтирования
   become_user: s20691161

@@ -55,8 +55,11 @@
             ip: "{{ ansible_default_ipv4.address }}"
             port: "10050"
         groups:
-          - groupid: "2"
-      auth: "{{ zabbix_auth.json.result }}"
+          - groupid: "2"  # Linux servers
+      auth: "{{ zabbix_auth.json.result | default(omit) }}"
       id: 2
     status_code: 200
+    timeout: 10
   register: host_registration
+  when: zabbix_auth is succeeded and zabbix_auth.json.result is defined
+

@@ -40,7 +40,6 @@
 
 - set_fact:
     zbx_token: "{{ zbx_auth.json.result }}"
-  when: zbx_auth.json.result | length > 0
 
 - name: Получить ID интерфейса Zabbix-сервера
   ansible.builtin.uri:
@@ -60,11 +59,9 @@
     status_code: 200
     timeout: 20
   register: interface_info
-  when: zbx_token is defined
 
 - set_fact:
     zbx_agent_interface_id: "{{ interface_info.json.result[0].interfaceid }}"
-  when: interface_info.json.result | length > 0
 
 - name: Обновить имя Zabbix-агента Zabbix-сервера
   ansible.builtin.uri:
@@ -85,15 +82,12 @@
       id: 30
     status_code: 200
     timeout: 30
-  when: zbx_token is defined
-    and zbx_agent_interface_id is defined
   register: api_response
-  changed_when: api_response.json.result is defined
+  changed_when: api_response.json.result
 
 - name: Вывести результат обновления
   debug:
-    var: api_response.json.result
-  when: api_response.json.result is defined
+    var: api_response.json
 
 - name: Выход из Zabbix API
   ansible.builtin.uri:
@@ -109,4 +103,3 @@
       id: 40
     status_code: 200
     timeout: 5
-  when: zbx_token is defined

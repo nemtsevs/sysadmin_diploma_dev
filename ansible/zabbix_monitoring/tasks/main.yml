@@ -7,9 +7,9 @@
     state: present
     update_cache: true
 
-- name: Install zabbix-api via pip
+- name: Install correct Zabbix API library
   ansible.builtin.pip:
-    name: zabbix-api
+    name: zabbix-api-pyzbx
     executable: pip3
 
 - name: Create a template for HTTP monitoring

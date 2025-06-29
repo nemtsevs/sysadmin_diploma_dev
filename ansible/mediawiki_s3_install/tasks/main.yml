@@ -18,7 +18,6 @@
     and lookup('env', 'TF_VAR_yc_secret_access_key') is defined
 
 - name: Проверить, смонтирован ли бакет
-  become_user: s20691161
   ansible.builtin.stat:
     path: /mnt/s3bucket
   register: mount_check

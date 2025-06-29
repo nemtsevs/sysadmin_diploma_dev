@@ -38,11 +38,6 @@
   register: zabbix_auth
   no_log: true
 
-- name: Вывести zabbix_auth
-  debug:
-    var: zabbix_auth
-  when: zabbix_auth is defined
-
 # - name: Обновить имя zabbix-агента
 #   ansible.builtin.uri:
 #     url: "http://{{ zabbix_server_ip }}:8080/api_jsonrpc.php"
@@ -89,9 +84,5 @@
     status_code: 200
     timeout: 5
   register: api_logout_result
+  no_log: true
   when: zabbix_auth.json.result is defined
-
-- name: Вывести api_logout_result
-  debug:
-    var: api_logout_result
-  when: api_logout_result is defined

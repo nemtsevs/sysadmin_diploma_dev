@@ -5,6 +5,7 @@
   ansible.builtin.apt:
     name: python3-zabbix-api
     state: present
+    update_cache: true
 
 - name: Create a template for HTTP monitoring
   community.zabbix.zabbix_template:

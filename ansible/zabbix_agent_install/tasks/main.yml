@@ -36,7 +36,6 @@
 
 - set_fact:
     zbx_token: "{{ zbx_auth.json.result }}"
-  when: zbx_auth.json.result | length > 0
 
 - name: Зарегистрировать хост на Zabbix-сервере
   ansible.builtin.uri:
@@ -72,7 +71,6 @@
 - name: Вывести результат регистрации хоста
   debug:
     var: host_registration
-  #when: host_registration.json.result is defined
 
 - name: Выход из Zabbix API
   ansible.builtin.uri:

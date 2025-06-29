@@ -23,12 +23,10 @@
     path: /mnt/s3bucket
     state: directory
     mode: '0755'
-    owner: s20691161
-    group: s20691161
 
-# - name: Монтировать бакет
-#   become_user: s20691161
-#   ansible.builtin.command: >
-#     s3fs {{ wiki_s3_bucket }} /mnt/s3bucket
-#     -o url=https://storage.yandexcloud.net
-#     -o passwd_file=/home/s20691161/.passwd-s3fs
+- name: Монтировать бакет
+  become_user: s20691161
+  ansible.builtin.command: >
+    s3fs {{ wiki_s3_bucket }} /mnt/s3bucket
+    -o url=https://storage.yandexcloud.net
+    -o passwd_file=/home/s20691161/.passwd-s3fs

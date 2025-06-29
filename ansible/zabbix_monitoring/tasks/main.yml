@@ -32,32 +32,53 @@
       params:
         username: "Admin"
         password: "{{ zabbix_server_api_admin_password }}"
-      id: 1
+      id: 10
     status_code: 200
     timeout: 10
   register: zabbix_auth
   no_log: true
+
+- name: Получить ID интерфейса Zabbix сервера
+  ansible.builtin.uri:
+    url: "http://{{ zabbix_server_ip }}:8080/api_jsonrpc.php"
+    method: POST
+    headers:
+      Content-Type: "application/json-rpc"
+      Authorization: "Bearer {{ zabbix_auth.json.result }}"
+    body_format: json
+    body:
+      jsonrpc: "2.0"
+      method: "hostinterface.get"
+      params:
+        filter:
+          host: "Zabbix server"
+      id: 20
+    status_code: 200
+    timeout: 20
+  register: interface_info
+  when: zabbix_auth.json.result is defined
+
+- set_fact:
+    zabbix_agent_interface_id: "{{ interface_info.json.result[0].interfaceid }}"
+  when: interface_info.json.result | length > 0
 
 - name: Обновить имя zabbix-агента
   ansible.builtin.uri:
     url: "http://{{ zabbix_server_ip }}:8080/api_jsonrpc.php"
     method: POST
     headers:
+      Content-Type: "application/json-rpc"
       Authorization: "Bearer {{ zabbix_auth.json.result }}"
     body_format: json
     body:
       jsonrpc: "2.0"
       method: "hostinterface.update"
       params:
-        filter:
-          host: "Zabbix server"
-        interfaces:
-          - type: 1
-            main: 1
-            useip: 1
-            dns: "zabbix-agent"
-            port: "10050"
-      id: 2
+        interfaceid: "{{ zabbix_agent_interface_id }}"
+        dns: "zabbix-agent"
+        useip: 0
+        port: "10050"
+      id: 30
     status_code: 200
     timeout: 30
   when: zabbix_auth.json.result is defined
@@ -80,7 +101,7 @@
       jsonrpc: "2.0"
       method: "user.logout"
       params: []
-      id: 3
+      id: 40
     status_code: 200
     timeout: 5
   when: zabbix_auth.json.result is defined

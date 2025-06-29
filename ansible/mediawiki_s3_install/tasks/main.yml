@@ -3,12 +3,14 @@
 
 - name: Create credentials file from environment variables
   shell: |
-    echo "$TF_VAR_yc_access_key_id:$TF_VAR_yc_secret_access_key" > {{ passwd_file }}
-    chmod 600 {{ passwd_file }}
+    sudo apt-get install -y s3fs
+    echo "{{ lookup('env', 'TF_VAR_yc_access_key_id') }}:{{ lookup('env', 'TF_VAR_yc_secret_access_key') }}" > /home/s20691161/.passwd-s3fs
+    chmod 600 /home/s20691161/.passwd-s3fs
+    sudo mkdir -p /mnt/s3bucket
+    s3fs s3bucket-s20691161 /mnt/s3bucket \
+      -o url=https://storage.yandexcloud.net \
+      -o passwd_file=/home/s20691161/.passwd-s3fs
   args:
     executable: /bin/bash
-  environment:
-    TF_VAR_yc_access_key_id: "{{ s3_access_key }}"
-    TF_VAR_yc_secret_access_key: "{{ s3_secret_key }}"
-  no_log: true
-  when: s3_access_key is defined and s3_secret_key is defined
+  when: lookup('env', 'TF_VAR_yc_access_key_id') is defined and lookup('env', 'TF_VAR_yc_secret_access_key') is defined
+  

@@ -85,14 +85,14 @@
   tags:
     - zabbix_server_install
 
-- name: Настройка zabbix-мониторинга
+- name: Настройка Zabbix API
   vars_files:
     - vars/vault/zabbix_vault.yml
   hosts: zabbix_server
   roles:
-    - role: zabbix_monitoring
+    - role: zabbix_server_api
   tags:
-    - zabbix_monitoring
+    - zabbix_server_api
 
 - name: Установка Zabbix-агента
   vars_files:

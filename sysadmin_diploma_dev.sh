@@ -249,13 +249,13 @@ zabbix_server_api_admin_password: "zabbix"
 ```
 
 nano playbook.yaml
-ansible-galaxy init zabbix_monitoring
+ansible-galaxy init zabbix_server_api
 
 yamllint playbook.yaml
-yamllint zabbix_monitoring/tasks/main.yml
+yamllint zabbix_server_api/tasks/main.yml
 ansible-playbook --syntax-check -i inventory.yaml playbook.yaml
 
-ansible-playbook playbook.yaml -i inventory.yaml --tags="zabbix_monitoring"
+ansible-playbook playbook.yaml -i inventory.yaml --tags="zabbix_server_api"
 
 http://89.169.176.105:8080
 http://89.169.176.105:8080/api_jsonrpc.php

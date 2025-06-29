@@ -87,7 +87,7 @@
 
 - name: Вывести результат обновления
   debug:
-    var: api_response.json
+    var: api_response.json.result
 
 - name: Выход из Zabbix API
   ansible.builtin.uri:

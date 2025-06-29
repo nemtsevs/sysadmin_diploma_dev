@@ -57,6 +57,7 @@
             main: 1
             useip: 1
             ip: "{{ ansible_host }}"
+            dns: ""
             port: "10050"
         templates:
           - templateid: 10001  # Linux by Zabbix agent

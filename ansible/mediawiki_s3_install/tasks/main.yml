@@ -25,6 +25,7 @@
       | list
       | length > 0
       }}
+
 - name: Отмонтировать бакет если смонтирован
   ansible.builtin.mount:
     path: /mnt/s3bucket

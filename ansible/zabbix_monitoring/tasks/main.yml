@@ -42,7 +42,7 @@
     zbx_token: "{{ zbx_auth.json.result }}"
   when: zbx_auth.json.result | length > 0
 
-- name: Получить ID интерфейса Zabbix сервера
+- name: Получить ID интерфейса Zabbix-сервера
   ansible.builtin.uri:
     url: "http://{{ zabbix_server_ip }}:8080/api_jsonrpc.php"
     method: POST
@@ -66,7 +66,7 @@
     zbx_agent_interface_id: "{{ interface_info.json.result[0].interfaceid }}"
   when: interface_info.json.result | length > 0
 
-- name: Обновить имя zabbix-агента
+- name: Обновить имя Zabbix-агента Zabbix-сервера
   ansible.builtin.uri:
     url: "http://{{ zabbix_server_ip }}:8080/api_jsonrpc.php"
     method: POST
@@ -90,7 +90,7 @@
   register: api_response
   changed_when: api_response.json.result is defined
 
-- name: Вывести ответ API
+- name: Вывести результат обновления
   debug:
     var: api_response.json.result
   when: api_response.json.result is defined

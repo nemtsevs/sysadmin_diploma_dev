@@ -17,38 +17,34 @@
     state: restarted
     enabled: true
 
-- name: Get Zabbix API auth token (Zabbix 7.2+)
-  uri:
+- name: Получить Zabbix API auth token
+  ansible.builtin.uri:
     url: "http://{{ zabbix_server_ip }}:8080/api_jsonrpc.php"
     method: POST
-    headers:
-      Content-Type: "application/json-rpc"
     body_format: json
     body:
       jsonrpc: "2.0"
       method: "user.login"
       params:
-        username: "Admin"  # Чувствительно к регистру!
+        username: "Admin"
         password: "{{ zabbix_server_api_admin_password }}"
-      id: 1
+      id: 10
     status_code: 200
     timeout: 10
-  register: zabbix_auth
-  no_log: true  # Скрывает пароль в логах
-  ignore_errors: yes  # Продолжает выполнение при ошибке
+  register: zbx_auth
+  no_log: true
 
-- name: Debug - Show auth result (для диагностики)
-  debug:
-    var: zabbix_auth.json
-  when: zabbix_auth.json is defined
+- set_fact:
+    zbx_token: "{{ zbx_auth.json.result }}"
+  when: zbx_auth.json.result | length > 0
 
-- name: Register host on Zabbix server
-  uri:
+- name: Зарегистрировать хост на Zabbix-сервере
+  ansible.builtin.uri:
     url: "http://{{ zabbix_server_ip }}:8080/api_jsonrpc.php"
     method: POST
     headers:
-      Content-Type: "application/json"
-      Authorization: "Bearer {{ zabbix_auth.json.result }}"
+      Content-Type: "application/json-rpc"
+      Authorization: "Bearer {{ zbx_token }}"
     body_format: json
     body:
       jsonrpc: "2.0"
@@ -60,18 +56,34 @@
             main: 1
             useip: 1
             ip: "{{ hostvars[inventory_hostname]['ansible_host'] | default(ansible_host) }}"
-            dns: ""
+            dns: "{{ ansible_facts['hostname'] }}"
             port: "10050"
         groups:
           - groupid: "{{ zabbix_linux_groupid | default('2') }}"
-      id: 2
+      id: 20
     status_code: 200
-    timeout: 10
+    timeout: 30
+  when: zbx_token is defined
   register: host_registration
-  when: zabbix_auth.json.result is defined
+  changed_when: host_registration.json.result is defined
 
-- name: Debug host registration result
+- name: Вывести результат регистрации хоста
   debug:
-    var: host_registration.json
-  when: host_registration.json is defined
+    var: host_registration.json.result
+  when: host_registration.json.result is defined
 
+- name: Выход из Zabbix API
+  ansible.builtin.uri:
+    url: "http://{{ zabbix_server_ip }}:8080/api_jsonrpc.php"
+    method: POST
+    headers:
+      Authorization: "Bearer {{ zbx_token }}"
+    body_format: json
+    body:
+      jsonrpc: "2.0"
+      method: "user.logout"
+      params: []
+      id: 30
+    status_code: 200
+    timeout: 5
+  when: zbx_token is defined

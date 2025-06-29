@@ -41,9 +41,8 @@
     mode: '0755'
 
 - name: Монтировать бакет
-  ansible.builtin.mount:
-    path: /mnt/s3bucket
-    src: "{{ wiki_s3_bucket }}"
-    fstype: fuse.s3fs
-    opts: "url=https://storage.yandexcloud.net,passwd_file=/home/s20691161/.passwd-s3fs"
-    state: mounted
+  become_user: s20691161
+  ansible.builtin.command: >
+    s3fs {{ wiki_s3_bucket }} /mnt/s3bucket
+    -o url=https://storage.yandexcloud.net
+    -o passwd_file=/home/s20691161/.passwd-s3fs

@@ -86,6 +86,8 @@
     - zabbix_server_install
 
 - name: Установка Zabbix-агента
+  vars_files:
+    - vars/vault/zabbix_vault.yml
   hosts: nginx
   roles:
     - role: zabbix_agent_install

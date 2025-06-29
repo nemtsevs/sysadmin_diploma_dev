@@ -29,7 +29,7 @@
       method: "user.login"
       params:
         user: "Admin"
-        password: "{{ zabbix_server_api_admin_password }}"
+        password: zabbix
       id: 1
     status_code: 200
     timeout: 5

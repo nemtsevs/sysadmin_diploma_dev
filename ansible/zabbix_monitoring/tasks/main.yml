@@ -39,6 +39,11 @@
     timeout: 10
   register: zabbix_auth
 
+- name: Вывести zabbix_auth
+  debug:
+    var: zabbix_auth
+  when: zabbix_auth is defined
+
 # - name: Обновить имя zabbix-агента
 #   uri:
 #     url: "http://{{ zabbix_server_ip }}:8080/api_jsonrpc.php"

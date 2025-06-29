@@ -58,6 +58,11 @@ nano ansible.cfg
 
 yamllint inventory.yaml
 
+ansible all --list-hosts -i inventory.yaml
+ansible linux --list-hosts -i inventory.yaml
+ansible nginx --list-hosts -i inventory.yaml
+ansible wiki --list-hosts -i inventory.yaml
+
 ansible all -m ping -i inventory.yaml
 
 

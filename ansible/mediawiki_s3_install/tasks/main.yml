@@ -2,6 +2,7 @@
 # tasks file for mediawiki_s3_install
 
 - name: Create credentials file from environment variables
+  become_user: s20691161
   shell: |
     sudo apt-get install -y s3fs
     echo "{{ lookup('env', 'TF_VAR_yc_access_key_id') }}:{{ lookup('env', 'TF_VAR_yc_secret_access_key') }}" > /home/s20691161/.passwd-s3fs
@@ -13,4 +14,3 @@
   args:
     executable: /bin/bash
   when: lookup('env', 'TF_VAR_yc_access_key_id') is defined and lookup('env', 'TF_VAR_yc_secret_access_key') is defined
-  

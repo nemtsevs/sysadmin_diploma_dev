@@ -25,7 +25,6 @@
   ansible.builtin.uri:
     url: "http://{{ zabbix_server_ip }}:8080/api_jsonrpc.php"
     method: POST
-    headers: {}
     body_format: json
     body:
       jsonrpc: "2.0"

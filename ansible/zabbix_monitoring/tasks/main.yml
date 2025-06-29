@@ -53,9 +53,9 @@
       jsonrpc: "2.0"
       method: "hostinterface.update"
       params:
-        interfaceid: 1
-        dns: "zabbix-agent"
+        interfaceid: 1  # Zabbix Agent
         useip: 0
+        dns: "zabbix-agent"
         port: "10050"
       id: 30
     status_code: 200

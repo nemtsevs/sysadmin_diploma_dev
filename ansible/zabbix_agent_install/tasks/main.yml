@@ -51,12 +51,12 @@
       params:
         host: "{{ ansible_facts['hostname'] }}"
         templates:
-          - templateid: 10001
+          - templateid: 10001  # Linux by Zabbix agent
         groups:
-          - groupid: "{{ zabbix_linux_groupid | default('2') }}"
+          - groupid: 2  # Linux servers
         interfaces:
-          - type: 1
-            main: 1
+          - type: &interfaceid 1  # Zabbix Agent
+            main: *interfaceid
             useip: 1
             ip: "{{ hostvars[inventory_hostname]['ansible_host'] \
               | default(ansible_host) }}"

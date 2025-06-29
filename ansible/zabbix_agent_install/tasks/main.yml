@@ -35,6 +35,8 @@
     timeout: 5
   register: zabbix_auth
   #no_log: true
+- debug:
+    var: zabbix_auth.json.result
 
 - name: Register host on Zabbix server
   uri:

@@ -49,19 +49,18 @@
       jsonrpc: "2.0"
       method: "host.create"
       params:
-        host: "{{ inventory_hostname }}"
+        host: "{{ ansible_facts['hostname'] }}"
+        templates:
+          - templateid: 10001
+        groups:
+          - groupid: "{{ zabbix_linux_groupid | default('2') }}"
         interfaces:
           - type: 1
             main: 1
             useip: 1
             ip: "{{ hostvars[inventory_hostname]['ansible_host'] \
               | default(ansible_host) }}"
-            dns: "{{ ansible_facts['hostname'] }}"
             port: "10050"
-        groups:
-          - groupid: "{{ zabbix_linux_groupid | default('2') }}"
-        templates:
-          - templateid: "10001"
       id: 20
     status_code: 200
     timeout: 30

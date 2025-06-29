@@ -14,15 +14,16 @@ linux:  # Группа хостов
       hosts:
         vm1: *vm1
 
-    wiki_media:
-      hosts:
-        vm2: *vm2
-        vm3: *vm3
-
-    wiki_db:
-      hosts:
-        vm2: *vm2
-        vm3: *vm3
+    wiki:
+      children:
+        wiki_media:
+          hosts:
+            vm2: *vm2
+            vm3: *vm3
+        wiki_db:
+          hosts:
+            vm2: *vm2
+            vm3: *vm3
 
     zabbix_server:
       hosts:

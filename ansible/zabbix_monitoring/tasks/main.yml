@@ -62,7 +62,6 @@
   when: zabbix_auth.json.result is defined
   register: api_result
   changed_when: api_result.json.result is defined
-  no_log: true
 
 - name: Вывести ответ API
   debug:

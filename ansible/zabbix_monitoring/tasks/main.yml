@@ -9,7 +9,7 @@
 
 - name: Install correct Zabbix API library
   ansible.builtin.pip:
-    name: zabbix-api-pyzbx
+    name: pyzabbix
     executable: pip3
 
 - name: Create a template for HTTP monitoring

@@ -49,7 +49,7 @@
       jsonrpc: "2.0"
       method: "host.create"
       params:
-        host: "{{ ansible_facts['hostname'] }}"
+        host: "{{ inventory_hostname }}"
         templates:
           - templateid: 10001  # Linux by Zabbix agent
         groups:

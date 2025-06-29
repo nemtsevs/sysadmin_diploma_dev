@@ -17,27 +17,30 @@
     state: restarted
     enabled: true
 
-- name: Get Zabbix API auth token
+- name: Get Zabbix API auth token (Zabbix 7.2+)
   uri:
     url: "http://{{ zabbix_server_ip }}:8080/api_jsonrpc.php"
     method: POST
     headers:
-      Content-Type: application/json
+      Content-Type: "application/json-rpc"
     body_format: json
     body:
       jsonrpc: "2.0"
       method: "user.login"
       params:
-        credentials:
-          user: "Admin"
-          password: "{{ zabbix_server_api_admin_password }}"
+        username: "Admin"  # Чувствительно к регистру!
+        password: "{{ zabbix_server_api_admin_password }}"
       id: 1
     status_code: 200
-    timeout: 5
+    timeout: 10
   register: zabbix_auth
-  #no_log: true
-- debug:
-    var: zabbix_auth
+  no_log: true  # Скрывает пароль в логах
+  ignore_errors: yes  # Продолжает выполнение при ошибке
+
+- name: Debug - Show auth result (для диагностики)
+  debug:
+    var: zabbix_auth.json
+  when: zabbix_auth.json is defined
 
 - name: Register host on Zabbix server
   uri:
@@ -55,13 +58,12 @@
           - type: 1
             main: 1
             useip: 1
-            ip: "{{ hostvars[inventory_hostname]['ansible_host'] }}"
+            ip: "{{ ansible_host }}"
             port: "10050"
         groups:
-          - groupid: "2"
-      auth: "{{ zabbix_auth.json.result | default(omit) }}"
+          - groupid: "2"  # Обычно "Linux servers"
+      auth: "{{ zabbix_auth.json.result }}"
       id: 2
     status_code: 200
     timeout: 10
-  register: host_registration
-  when: zabbix_auth is succeeded and zabbix_auth.json.result is defined
+  when: zabbix_auth.json.result is defined

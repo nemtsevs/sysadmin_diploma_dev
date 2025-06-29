@@ -69,7 +69,7 @@
 
 - name: Вывести результат регистрации хоста
   debug:
-    var: host_registration
+    var: host_registration.json
 
 - name: Выход из Zabbix API
   ansible.builtin.uri:

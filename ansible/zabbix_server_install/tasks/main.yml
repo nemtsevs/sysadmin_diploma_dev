@@ -25,7 +25,7 @@
     src: docker-compose.yml.j2
     dest: /home/s20691161/zabbix_server/docker-compose.yml
 
-- name: Ensure zabbix-agent service is stopped (if running on host)
+- name: Остановить zabbix-agent service если запущен
   ansible.builtin.service:
     name: zabbix-agent
     state: stopped

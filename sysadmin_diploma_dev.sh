@@ -4,13 +4,12 @@ nano ~/.bashrc
 export YC_TOKEN=$(yc iam create-token) # iam авторизация суточная
 export YC_CLOUD_ID=$(yc config get cloud-id)
 export YC_FOLDER_ID=$(yc config get folder-id)
-```
-source ~/.bashrc
-
 
 export TF_VAR_yc_service_account_id=ajei2cuo3i5nk7c5e61d
 export TF_VAR_yc_access_key_id=YCAJEiPeL7z6h36-YHwn-EQQ2
 export TF_VAR_yc_secret_access_key=
+```
+source ~/.bashrc
 
 
 

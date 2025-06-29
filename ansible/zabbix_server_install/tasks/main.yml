@@ -25,6 +25,14 @@
     src: docker-compose.yml.j2
     dest: /home/s20691161/zabbix_server/docker-compose.yml
 
+- name: Остановить и удалить контейнеры zabbix_server
+  become_user: s20691161
+  community.docker.docker_compose:
+    project_src: "/home/s20691161/zabbix_server/"
+    files: /home/s20691161/zabbix_server/docker-compose.yml
+    state: absent
+    remove_orphans: true
+
 - name: Запустить docker-compose zabbix_server
   become_user: s20691161
   community.docker.docker_compose:

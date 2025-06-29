@@ -49,14 +49,14 @@
       jsonrpc: "2.0"
       method: "hostinterface.update"
       params:
-        filter: {"host": "Zabbix server"}
-        interfaces: [{
-          "type": 1,
-          "main": 1,
-          "useip": 0,
-          "dns": "zabbix-agent",
-          "port": "10050"
-        }]
+        filter:
+          host: "Zabbix server"
+        interfaces:
+          - type: 1
+            main: 1
+            useip: 1
+            dns: "zabbix-agent"
+            port: "10050"
       id: 2
     status_code: 200
     timeout: 30

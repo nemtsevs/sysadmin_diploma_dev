@@ -53,8 +53,8 @@
         groups:
           - groupid: 2  # Linux servers
         interfaces:
-          - type: &interfaceid 1  # Zabbix Agent
-            main: *interfaceid
+          - type: 1  # Zabbix Agent
+            main: 1
             useip: 1
             ip: "{{ ansible_host }}"
             port: "10050"

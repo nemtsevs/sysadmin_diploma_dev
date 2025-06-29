@@ -71,7 +71,7 @@
 
 - name: Вывести результат регистрации хоста
   debug:
-    var: host_registration.json.result
+    var: host_registration
   #when: host_registration.json.result is defined
 
 - name: Выход из Zabbix API

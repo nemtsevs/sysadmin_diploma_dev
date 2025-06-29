@@ -19,7 +19,7 @@
 
 - name: Проверить, смонтирован ли каталог
   ansible.builtin.command: mountpoint -q /mnt/s3bucket
-  ignore_errors: true
+  ignore_errors: yes
   register: mount_check
   changed_when: false
 
